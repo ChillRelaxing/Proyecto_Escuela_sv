@@ -75,7 +75,6 @@ class EstudianteMateriaController
         include(dirname(__FILE__) . '/../views/estudianteMateria/updateEstudianteMateria.php');
     }
 
-
     // Método para mostrar la vista de confirmación de eliminación
     public function confirmDelete($id)
     {

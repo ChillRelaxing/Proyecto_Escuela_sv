@@ -30,9 +30,9 @@
             echo "<div class='alert alert-danger'>No se encontró la asignación.</div>";
             exit;
         }
+        //correcion de update a edit (../routers/estudianteMateriaRouter.php?action=edit&id=)
         ?>
-
-        <form action="../routers/estudianteMateriaRouter.php?action=update&id=<?= htmlspecialchars($id_asignacion); ?>" method="POST">
+        <form action="../routers/estudianteMateriaRouter.php?action=edit&id=<?= htmlspecialchars($id_asignacion); ?>" method="POST">
             <div class="form-group">
                 <label for="id_estudiante">Nombre Estudiante:</label>
                 <select name="id_estudiante" id="id_estudiante" class="form-control" required>
