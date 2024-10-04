@@ -21,29 +21,30 @@ class EstudianteMateriaController
     // Método para mostrar la lista de asignaciones estudiante-materia
     public function index()
     {
-        $result = $this->estudianteMateria->get_estudiante_materia();
-        $asignaciones = $result->fetchAll(PDO::FETCH_ASSOC);
+        // Obtén las asignaciones directamente como un array
+        $asignaciones = $this->estudianteMateria->get_estudiante_materia(); // Llama al método que devuelve un array de datos
 
         // Llamamos la vista que muestra la lista de asignaciones
-        include(dirname(__FILE__) . '/../views/indexEstudianteMateria.php');
+        include(dirname(__FILE__) . '/../views/estudianteMateria/indexEstudianteMateria.php');
     }
 
     // Método para asignar un estudiante a una materia
     public function create()
     {
+        // Obtener estudiantes y materias
+        $estudiantes = $this->estudianteMateria->get_estudiantes(); // Cambiar aquí
+        $materias = $this->estudianteMateria->get_materias_cursos(); // Cambiar aquí
+
         if ($_POST) {
-            // Asignamos los datos del formulario a las propiedades del objeto
             $this->estudianteMateria->id_estudiante = $_POST['id_estudiante'];
             $this->estudianteMateria->id_materia_curso = $_POST['id_materia_curso'];
 
-            // Redirigimos a la lista de asignaciones después de crear la relación
             $this->estudianteMateria->create();
-            header("Location: index.php");
+            header("Location: ../routers/estudianteMateriaRouter.php");
             exit();
         }
 
-        // Incluimos la vista del formulario de creación de asignación
-        include(dirname(__FILE__) . '/../views/createEstudianteMateria.php');
+        include(dirname(__FILE__) . '/../views/estudianteMateria/createEstudianteMateria.php');
     }
 
     // Método para editar una asignación
@@ -51,7 +52,13 @@ class EstudianteMateriaController
     {
         // Cargamos la asignación que se desea editar
         $this->estudianteMateria->id = $id;
-        $this->estudianteMateria->get_estudiante_materia_by_id();
+        $asignacion = $this->estudianteMateria->get_estudiante_materia_by_id($id); // Almacena el resultado
+
+        // Verifica si la asignación fue encontrada
+        if (!$asignacion) {
+            echo "<div class='alert alert-danger'>No se encontró la asignación.</div>";
+            exit();
+        }
 
         if ($_POST) {
             // Asignamos los datos del formulario a las propiedades del objeto
@@ -60,20 +67,21 @@ class EstudianteMateriaController
 
             // Redirigimos a la lista de asignaciones después de actualizar
             $this->estudianteMateria->update();
-            header("Location: index.php");
+            header("Location: ../routers/estudianteMateriaRouter.php");
             exit();
         }
 
         // Incluimos la vista del formulario de edición
-        include(dirname(__FILE__) . '/../views/updateEstudianteMateria.php');
+        include(dirname(__FILE__) . '/../views/estudianteMateria/updateEstudianteMateria.php');
     }
+
 
     // Método para mostrar la vista de confirmación de eliminación
     public function confirmDelete($id)
     {
         // Cargamos la asignación que se desea eliminar
         $this->estudianteMateria->id = $id;
-        $this->estudianteMateria->get_estudiante_materia_by_id();
+        $this->estudianteMateria->get_estudiante_materia_by_id($id);
 
         // Incluimos la vista de confirmación de eliminación
         include(dirname(__FILE__) . '/../views/deleteEstudianteMateria.php');
@@ -96,6 +104,4 @@ class EstudianteMateriaController
             echo "ID no proporcionado.";
         }
     }
-
-    
 }

@@ -34,45 +34,58 @@ class EstudianteMateria
         $result->bindParam(":id_materia_curso", $this->id_materia_curso);
 
         // Ejecutamos la consulta
-        if ($result->execute()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $result->execute();
     }
 
     // Método para obtener todas las asignaciones estudiante-materia
     public function get_estudiante_materia()
     {
-        $query = "SELECT * FROM " . $this->table_name;
+        $query = "
+        SELECT em.id_estudiante_materia, 
+               e.nombre AS nombre_estudiante, 
+               e.apellido AS apellido_estudiante, 
+               mc.nombre AS nombre_materia
+        FROM estudiante_materia em
+        JOIN estudiantes e ON em.id_estudiante = e.id_estudiante
+        JOIN materias_cursos mc ON em.id_materia_curso = mc.id_materia_curso
+    ";
+
         $result = $this->conn->prepare($query);
         $result->execute();
-        return $result;
+        return $result->fetchAll(PDO::FETCH_ASSOC); // Devuelve un array de resultados
     }
 
     // Método para obtener una asignación por ID
-    public function get_estudiante_materia_by_id()
+    public function get_estudiante_materia_by_id($id)
     {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE id = :id";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE id_estudiante_materia = :id";
         $result = $this->conn->prepare($query);
 
         // Enlazamos el parámetro
-        $result->bindParam(":id", $this->id);
+        $result->bindParam(":id", $id);
         $result->execute();
 
         $row = $result->fetch(PDO::FETCH_ASSOC);
 
-        // Asignamos los valores recuperados
-        $this->id_estudiante = $row['id_estudiante'];
-        $this->id_materia_curso = $row['id_materia_curso'];
+        // Verifica si la fila fue encontrada
+        if ($row) {
+            // Asignamos los valores recuperados
+            $this->id_estudiante = $row['id_estudiante'];
+            $this->id_materia_curso = $row['id_materia_curso'];
+            return $row; // Retorna el registro completo
+        }
+
+        return null; // Si no se encuentra, retorna null
     }
+
+
 
     // Método para actualizar una asignación estudiante-materia
     public function update()
     {
         $query = "UPDATE " . $this->table_name . " 
-            SET id_estudiante = :id_estudiante, id_materia_curso = :id_materia_curso
-            WHERE id = :id";
+        SET id_estudiante = :id_estudiante, id_materia_curso = :id_materia_curso
+        WHERE id_estudiante_materia = :id";
 
         // Limpiamos los datos
         $this->id_estudiante = htmlspecialchars(strip_tags($this->id_estudiante));
@@ -88,17 +101,13 @@ class EstudianteMateria
         $result->bindParam(":id", $this->id);
 
         // Ejecutamos la consulta
-        if ($result->execute()) {
-            return true;
-        }
-
-        return false;
+        return $result->execute();
     }
 
     // Método para eliminar una asignación estudiante-materia
     public function delete()
     {
-        $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
+        $query = "DELETE FROM " . $this->table_name . " WHERE id_estudiante_materia = :id"; // Corrección aquí
 
         // Preparamos la consulta
         $result = $this->conn->prepare($query);
@@ -107,11 +116,24 @@ class EstudianteMateria
         $result->bindParam(":id", $this->id);
 
         // Ejecutamos la consulta
-        if ($result->execute()) {
-            return true;
-        }
+        return $result->execute();
+    }
 
-        return false;
+    // Método para obtener todos los estudiantes
+    public function get_estudiantes()
+    {
+        $query = "SELECT id_estudiante, nombre, apellido FROM estudiantes";
+        $result = $this->conn->prepare($query);
+        $result->execute();
+        return $result->fetchAll(PDO::FETCH_ASSOC); // Cambiado para mantener la consistencia
+    }
+
+    // Método para obtener todas las materias
+    public function get_materias_cursos()
+    {
+        $query = "SELECT id_materia_curso, nombre FROM materias_cursos";
+        $result = $this->conn->prepare($query);
+        $result->execute();
+        return $result->fetchAll(PDO::FETCH_ASSOC); // Cambiado para mantener la consistencia
     }
 }
-?>
