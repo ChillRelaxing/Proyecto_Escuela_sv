@@ -35,7 +35,8 @@
                                 <td><?= htmlspecialchars($asignacion['nombre_materia']); ?></td>
                                 <td>
                                     <a href="../routers/estudianteMateriaRouter.php?action=edit&id=<?= $asignacion['id_estudiante_materia']; ?>" class="btn btn-warning btn-sm">Editar</a>
-                                    <a href="index.php?action=delete&id=<?= $asignacion['id_estudiante_materia']; ?>" class="btn btn-danger btn-sm">Eliminar</a>
+
+                                    <a href="../routers/estudianteMateriaRouter.php?action=confirmDelete&id=<?= $asignacion['id_estudiante_materia'] ?>" class="btn btn-danger btn-sm">Eliminar</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

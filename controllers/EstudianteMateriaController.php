@@ -80,11 +80,18 @@ class EstudianteMateriaController
     {
         // Cargamos la asignación que se desea eliminar
         $this->estudianteMateria->id = $id;
-        $this->estudianteMateria->get_estudiante_materia_by_id($id);
+        $asignacion = $this->estudianteMateria->get_estudiante_materia_by_id($id);
+
+        // Verificamos si la asignación fue encontrada
+        if (!$asignacion) {
+            echo "<div class='alert alert-danger'>No se encontró la asignación.</div>";
+            exit();
+        }
 
         // Incluimos la vista de confirmación de eliminación
-        include(dirname(__FILE__) . '/../views/deleteEstudianteMateria.php');
+        include(dirname(__FILE__) . '/../views/estudianteMateria/deleteEstudianteMateria.php');
     }
+
 
     // Método para confirmar y eliminar una asignación
     public function delete()
@@ -94,7 +101,7 @@ class EstudianteMateriaController
 
             // Lógica de eliminación
             if ($this->estudianteMateria->delete()) {
-                header("Location: indexEstudianteMateria.php");
+                header("Location: ../routers/estudianteMateriaRouter.php");
                 exit();
             } else {
                 echo "Error al eliminar la asignación.";

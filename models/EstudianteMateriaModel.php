@@ -58,27 +58,40 @@ class EstudianteMateria
     // Método para obtener una asignación por ID
     public function get_estudiante_materia_by_id($id)
     {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE id_estudiante_materia = :id";
+        // Consulta modificada para incluir el nombre y apellido del estudiante y el nombre de la materia
+        $query = "
+         SELECT em.id_estudiante_materia, 
+                e.nombre AS nombre_estudiante, 
+                e.apellido AS apellido_estudiante, 
+                mc.nombre AS nombre_materia,
+                em.id_estudiante,  -- ID del estudiante para el formulario de edición
+                em.id_materia_curso -- ID de la materia para el formulario de edición
+         FROM estudiante_materia em
+         JOIN estudiantes e ON em.id_estudiante = e.id_estudiante
+         JOIN materias_cursos mc ON em.id_materia_curso = mc.id_materia_curso
+         WHERE em.id_estudiante_materia = :id";
+
+        // Preparamos la consulta
         $result = $this->conn->prepare($query);
 
         // Enlazamos el parámetro
         $result->bindParam(":id", $id);
         $result->execute();
 
+        // Obtenemos el registro
         $row = $result->fetch(PDO::FETCH_ASSOC);
 
-        // Verifica si la fila fue encontrada
+        // Verifica si se encontró el registro
         if ($row) {
-            // Asignamos los valores recuperados
-            $this->id_estudiante = $row['id_estudiante'];
-            $this->id_materia_curso = $row['id_materia_curso'];
+            // Asignamos los valores recuperados a las propiedades de la clase
+            $this->id_estudiante = $row['id_estudiante']; // Asigna el ID del estudiante
+            $this->id_materia_curso = $row['id_materia_curso']; // Asigna el ID de la materia
+            $this->id = $row['id_estudiante_materia']; // Asigna el ID de la asignación
             return $row; // Retorna el registro completo
         }
 
         return null; // Si no se encuentra, retorna null
     }
-
-
 
     // Método para actualizar una asignación estudiante-materia
     public function update()

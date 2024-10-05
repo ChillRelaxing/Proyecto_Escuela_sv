@@ -23,9 +23,17 @@ switch ($action) {
         }
         break;
 
-    case 'delete':
+    case 'confirmDelete':
         if ($id) {
-            $controller->delete($id);
+            $controller->confirmDelete($id); // Mostrar la confirmación
+        } else {
+            $controller->index();
+        }
+        break;
+
+    case 'delete':
+        if ($_POST && isset($_POST['id'])) {
+            $controller->delete(); // Realizar la eliminación
         } else {
             $controller->index();
         }
@@ -35,5 +43,3 @@ switch ($action) {
         $controller->index();
         break;
 }
-
-?>
