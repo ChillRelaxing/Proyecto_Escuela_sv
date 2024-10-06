@@ -1,15 +1,17 @@
 <?php
 
-class Reportes
+class Reporte
 {
     private $conn;
     private $table_name = "reportes"; // nombre de la tabla
 
     // Atributos que hacen referencia a los campos de la tabla
-    public $id;
-    public $titulo;
-    public $contenido;
-    public $fecha;
+    public $id_reporte;            // Identificador único del reporte
+    public $descripcion;           // Descripción del reporte
+    public $fecha_reporte;         // Fecha del reporte
+    public $id_estudiante;         // ID del estudiante relacionado con el reporte
+    public $id_usuario;            // ID del usuario que creó el reporte
+    public $id_materia_curso;      // ID de la materia o curso relacionado
 
     // Constructor de la clase
     public function __construct($db)
@@ -20,35 +22,45 @@ class Reportes
     // Método para crear un nuevo reporte
     public function create()
     {
-        // Creamos la consulta
-        $query = "INSERT INTO " . $this->table_name . 
-                 " SET titulo = :titulo, contenido = :contenido, fecha = :fecha";
+        $query = "INSERT INTO " . $this->table_name .
+            " SET descripcion = :descripcion, fecha_reporte = :fecha_reporte, 
+                   id_estudiante = :id_estudiante, id_usuario = :id_usuario, 
+                   id_materia_curso = :id_materia_curso";
 
         // Preparamos la consulta
         $result = $this->conn->prepare($query);
 
         // Limpiamos el código
-        $this->titulo = htmlspecialchars(strip_tags($this->titulo));
-        $this->contenido = htmlspecialchars(strip_tags($this->contenido));
-        $this->fecha = htmlspecialchars(strip_tags($this->fecha));
+        $this->descripcion = htmlspecialchars(strip_tags($this->descripcion));
+        $this->fecha_reporte = htmlspecialchars(strip_tags($this->fecha_reporte));
+        $this->id_estudiante = htmlspecialchars(strip_tags($this->id_estudiante));
+        $this->id_usuario = htmlspecialchars(strip_tags($this->id_usuario));
+        $this->id_materia_curso = htmlspecialchars(strip_tags($this->id_materia_curso));
 
         // Enlazamos los parámetros
-        $result->bindParam(":titulo", $this->titulo);
-        $result->bindParam(":contenido", $this->contenido);
-        $result->bindParam(":fecha", $this->fecha);
+        $result->bindParam(":descripcion", $this->descripcion);
+        $result->bindParam(":fecha_reporte", $this->fecha_reporte);
+        $result->bindParam(":id_estudiante", $this->id_estudiante);
+        $result->bindParam(":id_usuario", $this->id_usuario);
+        $result->bindParam(":id_materia_curso", $this->id_materia_curso);
 
         // Ejecutamos la consulta
-        if ($result->execute()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $result->execute();
     }
 
     // Método para obtener todos los reportes
     public function get_reportes()
     {
-        $query = "SELECT * FROM " . $this->table_name;
+        // Consulta simplificada con JOIN para traer información relacionada de las otras tablas
+        $query = "SELECT reportes.id_reporte, reportes.descripcion, reportes.fecha_reporte, 
+                          estudiantes.nombre AS nombre_estudiante, 
+                          usuarios.nombre  AS nombre_usuario, 
+                          materias_cursos.nombre AS nombre_materia
+                   FROM reportes
+                   JOIN estudiantes ON reportes.id_estudiante = estudiantes.id_estudiante
+                   JOIN usuarios ON reportes.id_usuario = usuarios.id_usuario
+                   JOIN materias_cursos ON reportes.id_materia_curso = materias_cursos.id_materia_curso";
+
         $result = $this->conn->prepare($query);
         $result->execute();
         return $result;
@@ -57,65 +69,76 @@ class Reportes
     // Método para obtener un reporte por ID
     public function get_reporte_by_id()
     {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE id = :id";
+        $query = "SELECT reportes.id_reporte, reportes.descripcion, reportes.fecha_reporte, 
+                          estudiantes.nombre AS nombre_estudiante, 
+                          usuarios.nombre AS nombre_usuario, 
+                          materias_cursos.nombre AS nombre_materia
+                   FROM reportes
+                   JOIN estudiantes ON reportes.id_estudiante = estudiantes.id_estudiante
+                   JOIN usuarios ON reportes.id_usuario = usuarios.id_usuario
+                   JOIN materias_cursos ON reportes.id_materia_curso = materias_cursos.id_materia_curso
+                   WHERE reportes.id_reporte = :id";
+
         $result = $this->conn->prepare($query);
-        $result->bindParam(":id", $this->id);
+        $result->bindParam(":id", $this->id_reporte);
         $result->execute();
 
         $row = $result->fetch(PDO::FETCH_ASSOC);
 
         // Asignamos los valores de las columnas a los atributos
-        $this->titulo = $row["titulo"];
-        $this->contenido = $row["contenido"];
-        $this->fecha = $row["fecha"];
+        if ($row) {
+            $this->descripcion = $row["descripcion"];
+            $this->fecha_reporte = $row["fecha_reporte"];
+            $this->id_estudiante = $row["nombre_estudiante"];  // Nombre del estudiante
+            $this->id_usuario = $row["nombre_usuario"];        // Nombre del usuario
+            $this->id_materia_curso = $row["nombre_materia"];  // Nombre de la materia
+        }
     }
 
     // Método para actualizar un reporte
     public function update()
     {
-        $query = "UPDATE " . $this->table_name . 
-                 " SET titulo = :titulo, contenido = :contenido, fecha = :fecha 
-                 WHERE id = :id";
+        $query = "UPDATE reportes 
+                   SET descripcion = :descripcion, fecha_reporte = :fecha_reporte, 
+                       id_estudiante = :id_estudiante, id_usuario = :id_usuario, 
+                       id_materia_curso = :id_materia_curso 
+                   WHERE id_reporte = :id";
 
         // Limpiamos el código
-        $this->titulo = htmlspecialchars(strip_tags($this->titulo));
-        $this->contenido = htmlspecialchars(strip_tags($this->contenido));
-        $this->fecha = htmlspecialchars(strip_tags($this->fecha));
-        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->descripcion = htmlspecialchars(strip_tags($this->descripcion));
+        $this->fecha_reporte = htmlspecialchars(strip_tags($this->fecha_reporte));
+        $this->id_estudiante = htmlspecialchars(strip_tags($this->id_estudiante));
+        $this->id_usuario = htmlspecialchars(strip_tags($this->id_usuario));
+        $this->id_materia_curso = htmlspecialchars(strip_tags($this->id_materia_curso));
+        $this->id_reporte = htmlspecialchars(strip_tags($this->id_reporte));
 
         // Preparamos la consulta
         $result = $this->conn->prepare($query);
 
         // Enlazamos los parámetros
-        $result->bindParam(":titulo", $this->titulo);
-        $result->bindParam(":contenido", $this->contenido);
-        $result->bindParam(":fecha", $this->fecha);
-        $result->bindParam(":id", $this->id);
+        $result->bindParam(":descripcion", $this->descripcion);
+        $result->bindParam(":fecha_reporte", $this->fecha_reporte);
+        $result->bindParam(":id_estudiante", $this->id_estudiante);
+        $result->bindParam(":id_usuario", $this->id_usuario);
+        $result->bindParam(":id_materia_curso", $this->id_materia_curso);
+        $result->bindParam(":id", $this->id_reporte);
 
         // Ejecutamos la consulta
-        if ($result->execute()) {
-            return true;
-        }
-
-        return false;
+        return $result->execute();
     }
 
     // Método para eliminar un reporte
     public function delete()
     {
-        $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
+        $query = "DELETE FROM reportes WHERE id_reporte = :id";
 
         // Preparamos la consulta
         $result = $this->conn->prepare($query);
 
         // Enlazamos el parámetro
-        $result->bindParam(":id", $this->id);
+        $result->bindParam(":id", $this->id_reporte);
 
         // Ejecutamos la consulta
-        if ($result->execute()) {
-            return true;
-        }
-
-        return false;
+        return $result->execute();
     }
 }

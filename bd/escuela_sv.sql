@@ -1,7 +1,7 @@
 -- Crear la base de datos
 CREATE DATABASE IF NOT EXISTS escuela_sv;
 USE escuela_sv;
-
+ 
 -- Crear tabla de roles
 CREATE TABLE roles (
     id_rol INT AUTO_INCREMENT PRIMARY KEY,
@@ -58,7 +58,6 @@ CREATE TABLE reportes (
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
     FOREIGN KEY (id_materia_curso) REFERENCES materias_cursos(id_materia_curso) ON DELETE CASCADE
 );
-
 
 -- Ver registros de la tabla roles
 SELECT * FROM roles;
