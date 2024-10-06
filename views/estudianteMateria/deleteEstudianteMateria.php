@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
+<br><br>
     <div class="container mt-5">
         <h2>¿Estás seguro que deseas eliminar esta asignación?</h2>
 

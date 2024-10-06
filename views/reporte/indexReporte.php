@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+<br><br>
     <div class="container">
         <div class="card m-auto mt-5 p-4">
             <h2>Lista de Reportes</h2>

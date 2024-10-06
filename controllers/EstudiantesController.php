@@ -2,113 +2,94 @@
 require_once(dirname(__FILE__) . '/../config/conf.php');
 require_once(dirname(__FILE__) . '/../models/EstudiantesModel.php');
 
-class MateriasCursosController
+class EstudiantesController
 {
     private $db;
-    private $estudiantes;
+    private $estudiante;
 
-    // Constructor
     public function __construct()
     {
-        // Capturamos la conexión a la base de datos
+        // Conexión a la base de datos
         $database = new Conexion();
         $this->db = $database->Conectar();
 
-        // Instanciamos el modelo MateriasCursos
-        $this->estudiantes = new Estudiantes($this->db);
+        // Instanciamos el modelo Estudiantes
+        $this->estudiante = new Estudiantes($this->db);
     }
 
-    // Método para mostrar la lista de Estudiantes
     public function index()
     {
-        $result = $this->estudiantes->get_Estudiantes();
+        $result = $this->estudiante->get_estudiantes();
         $estudiantes = $result->fetchAll(PDO::FETCH_ASSOC);
 
-        // Llamamos la vista que muestra la lista de Estudiantes
-        include(dirname(__FILE__) . '/../views/indexEstudiantes.php');
+        include(dirname(__FILE__) . '/../views/Estudiantes/indexEstudiantes.php');
     }
 
-    // Método para crear un nuevo Estudiante
     public function create()
     {
-        if ($_POST) {
-            // Asignamos los datos del formulario a las propiedades del objeto
-            $this->estudiantes->nombre = $_POST['nombre'];
-            $this->estudiantes->apellido = $_POST['apellido'];
-            $this->estudiantes->correo = $_POST['correo'];
-            $this->estudiantes->telefono = $_POST['telefono'];
-            $this->estudiantes->carnet = $_POST['carnet'];
-            $this->estudiantes->modalidad = $_POST['modalidad'];
-
-            // Redirigimos a la lista de estudiantes después de crear el Estudiante
-            if ($this->estudiantes->create()) {
-                header("Location: index.php");
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Asignar datos del formulario
+            $this->estudiante->nombre = $_POST['nombre'];
+            $this->estudiante->apellido = $_POST['apellido'];
+            $this->estudiante->correo = $_POST['correo'];
+            $this->estudiante->telefono = $_POST['telefono'];
+            $this->estudiante->carnet = $_POST['carnet'];
+            $this->estudiante->modalidad = $_POST['modalidad'];
+            
+            // Guardar y redirigir
+            if ($this->estudiante->create()) {
+                header("Location: ../routers/estudiantesRouter.php");
                 exit();
             } else {
-                echo "Error al crear el estudiante.";
+                echo "Error al guardar el estudiante.";
             }
         }
 
-        // Incluimos la vista del formulario de creación de Estudiante
-        include(dirname(__FILE__) . '/../views/createEstudiantes.php');
+        include(dirname(__FILE__) . '/../views/Estudiantes/createEstudiantes.php');
     }
 
-    // Método para editar un Estudiante
-    public function edit($id_estudiante)
+    public function edit($id)
     {
-        // Cargamos el rol que se desea editar
-        $this->estudiantes->id_estudiante = $id_estudiante;
-        $this->estudiantes->get_Estudiantes_by_id();
+        $this->estudiante->id_estudiante = $id;
+        $this->estudiante->get_estudiantes_by_id();
 
-        if ($_POST) {
-            // Asignamos los datos del formulario a las propiedades del objeto
-            $this->estudiantes->nombre = $_POST['nombre'];
-            $this->estudiantes->apellido = $_POST['apellido'];
-            $this->estudiantes->correo = $_POST['correo'];
-            $this->estudiantes->telefono = $_POST['telefono'];
-            $this->estudiantes->carnet = $_POST['carnet'];
-            $this->estudiantes->modalidad = $_POST['modalidad'];
-
-            // Redirigimos a la lista de roles después de actualizar
-            if ($this->estudiantes->update()) {
-                header("Location: index.php");
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->estudiante->nombre = $_POST['nombre'];
+            $this->estudiante->apellido = $_POST['apellido'];
+            $this->estudiante->correo = $_POST['correo'];
+            $this->estudiante->telefono = $_POST['telefono'];
+            $this->estudiante->carnet = $_POST['carnet'];
+            $this->estudiante->modalidad = $_POST['modalidad'];
+            
+            if ($this->estudiante->update()) {
+                header("Location: ../routers/estudiantesRouter.php");
                 exit();
             } else {
                 echo "Error al actualizar el estudiante.";
             }
         }
 
-        // Incluimos la vista del formulario de edición
-        include(dirname(__FILE__) . '/../views/updateEstudiantes.php');
+        include(dirname(__FILE__) . '/../views/Estudiantes/updateEstudiantes.php');
     }
 
-    // Método para mostrar la vista de confirmación de eliminación
-    public function confirmDelete($id_estudiante)
+    public function confirmDelete($id)
+{
+    $this->estudiante->id_estudiante = $id;
+    $this->estudiante->get_estudiantes_by_id(); // Obtener los detalles del estudiante
+
+    include(dirname(__FILE__) . '/../views/Estudiantes/deleteEstudiantes.php'); // Incluir la vista de confirmación
+}
+    
+    public function delete($id)
     {
-        // Cargamos el rol que se desea eliminar
-        $this->estudiantes->id_estudiante = $id_estudiante;
-        $this->estudiantes->get_Estudiantes_by_id();
-
-        // Incluimos la vista de confirmación de eliminación
-        include(dirname(__FILE__) . '/../views/deleteEstudiantes.php');
-    }
-
-    // Método para confirmar y eliminar un Estudiante
-    public function delete()
-    {
-        if ($_POST && isset($_POST['id_estudiante'])) {
-            $this->estudiantes->id_estudiante = $_POST['id_estudiante'];
-
-            // Lógica de eliminación
-            if ($this->rol->delete()) {
-                header("Location: indexEstudiantes.php");
-                exit();
-            } else {
-                echo "Error al eliminar el estudiante.";
-            }
+        $this->estudiante->id_estudiante = $id;
+        if ($this->estudiante->delete()) {
+            header("Location: ../routers/estudiantesRouter.php");
+            exit();
         } else {
-            echo "ID de estudiante no proporcionado.";
+            echo "Error al eliminar el estudiante.";
         }
     }
 }
+
 ?>
