@@ -69,30 +69,16 @@ class Reporte
     // Método para obtener un reporte por ID
     public function get_reporte_by_id()
     {
-        $query = "SELECT reportes.id_reporte, reportes.descripcion, reportes.fecha_reporte, 
-                          estudiantes.nombre AS nombre_estudiante, 
-                          usuarios.nombre AS nombre_usuario, 
-                          materias_cursos.nombre AS nombre_materia
-                   FROM reportes
-                   JOIN estudiantes ON reportes.id_estudiante = estudiantes.id_estudiante
-                   JOIN usuarios ON reportes.id_usuario = usuarios.id_usuario
-                   JOIN materias_cursos ON reportes.id_materia_curso = materias_cursos.id_materia_curso
-                   WHERE reportes.id_reporte = :id";
+        $query = "SELECT id_reporte, descripcion, fecha_reporte, id_estudiante, id_usuario, id_materia_curso 
+              FROM reportes 
+              WHERE id_reporte = :id";
 
         $result = $this->conn->prepare($query);
         $result->bindParam(":id", $this->id_reporte);
         $result->execute();
 
-        $row = $result->fetch(PDO::FETCH_ASSOC);
-
-        // Asignamos los valores de las columnas a los atributos
-        if ($row) {
-            $this->descripcion = $row["descripcion"];
-            $this->fecha_reporte = $row["fecha_reporte"];
-            $this->id_estudiante = $row["nombre_estudiante"];  // Nombre del estudiante
-            $this->id_usuario = $row["nombre_usuario"];        // Nombre del usuario
-            $this->id_materia_curso = $row["nombre_materia"];  // Nombre de la materia
-        }
+        // Retorna el resultado como un array asociativo
+        return $result->fetch(PDO::FETCH_ASSOC);
     }
 
     // Método para actualizar un reporte
@@ -140,5 +126,32 @@ class Reporte
 
         // Ejecutamos la consulta
         return $result->execute();
+    }
+
+    // Obtener la lista de estudiantes
+    public function get_estudiantes()
+    {
+        $query = "SELECT id_estudiante, nombre FROM estudiantes";
+        $result = $this->conn->prepare($query);
+        $result->execute();
+        return $result->fetchAll(PDO::FETCH_ASSOC);  // Devuelve el resultado como un array asociativo
+    }
+
+    // Obtener la lista de usuarios (profesores o administradores)
+    public function get_usuarios()
+    {
+        $query = "SELECT id_usuario, nombre FROM usuarios";
+        $result = $this->conn->prepare($query);
+        $result->execute();
+        return $result->fetchAll(PDO::FETCH_ASSOC);  // Devuelve el resultado como un array asociativo
+    }
+
+    // Obtener la lista de materias/cursos
+    public function get_materias()
+    {
+        $query = "SELECT id_materia_curso, nombre FROM materias_cursos";
+        $result = $this->conn->prepare($query);
+        $result->execute();
+        return $result->fetchAll(PDO::FETCH_ASSOC);  // Devuelve el resultado como un array asociativo
     }
 }

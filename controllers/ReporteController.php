@@ -47,17 +47,33 @@ class ReporteController
             }
         }
 
+        // Obtener los datos de las tablas relacionadas para el formulario
+        $estudiantes = $this->reporte->get_estudiantes();  // Obtener la lista de estudiantes
+        $usuarios = $this->reporte->get_usuarios();        // Obtener la lista de usuarios
+        $materias = $this->reporte->get_materias();        // Obtener la lista de materias/cursos
+
         // Incluimos la vista del formulario de creación
         include(dirname(__FILE__) . '/../views/reporte/createReporte.php');
     }
 
-    // Método para editar un reporte
     public function edit($id)
     {
         // Cargamos el reporte que se desea editar
         $this->reporte->id_reporte = $id;
-        $this->reporte->get_reporte_by_id();
+        $reporte = $this->reporte->get_reporte_by_id();
 
+        // Verifica si el reporte fue encontrado
+        if (!$reporte) {
+            header("Location: ../routers/reporteRouter.php?error=not_found");
+            exit();
+        }
+
+        // Obtener los datos de las tablas relacionadas para el formulario
+        $estudiantes = $this->reporte->get_estudiantes();
+        $usuarios = $this->reporte->get_usuarios();
+        $materias = $this->reporte->get_materias();
+
+        // Verificar si se recibió una solicitud POST para actualizar
         if ($_POST) {
             // Asignamos los datos del formulario a las propiedades del reporte
             $this->reporte->descripcion = $_POST['descripcion'];
@@ -74,20 +90,27 @@ class ReporteController
             }
         }
 
-        // Incluimos la vista del formulario de edición
+        // Incluimos la vista del formulario de edición y pasamos los datos
         include(dirname(__FILE__) . '/../views/reporte/updateReporte.php');
     }
 
-    // Método para mostrar la vista de confirmación de eliminación
+
     public function confirmDelete($id)
     {
         // Cargamos el reporte que se desea eliminar
         $this->reporte->id_reporte = $id;
-        $this->reporte->get_reporte_by_id();
+        $reporte = $this->reporte->get_reporte_by_id(); // Asegúrate de que este método retorna el reporte
+
+        if (!$reporte) {
+            // Maneja el caso en que el reporte no se encuentra
+            echo "Reporte no encontrado.";
+            return; // Salimos de la función
+        }
 
         // Incluimos la vista del formulario de eliminación
         include(dirname(__FILE__) . '/../views/reporte/deleteReporte.php');
     }
+
 
     // Método para confirmar y eliminar un reporte
     public function delete()
