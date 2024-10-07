@@ -1,6 +1,6 @@
 <?php
 require_once(dirname(__FILE__) . '/../config/conf.php');
-require_once(dirname(__FILE__) . '/../models/UsuarioModel.php');
+require_once(dirname(__FILE__) . '/../models/usuariosModel.php');
 
 class UsuarioController
 {
@@ -25,7 +25,7 @@ class UsuarioController
         $usuarios = $result->fetchAll(PDO::FETCH_ASSOC);
 
         // Llamamos la vista que muestra la lista de usuarios
-        include(dirname(__FILE__) . '/../views/indexUsuario.php');
+        include(dirname(__FILE__) . '/../views/usuario/indexUsuario.php');
     }
 
     // Método para crear un nuevo usuario
@@ -41,15 +41,19 @@ class UsuarioController
 
             // Redirigimos a la lista de usuarios después de crear el usuario
             if ($this->usuario->create()) {
-                header("Location: index.php");
+                header("Location:../routers/usuariosRouter.php");
                 exit();
             } else {
                 echo "Error al crear el usuario.";
             }
         }
 
+        
+        // Obtener los datos de las tablas relacionadas para el formulario
+        $roles = $this->usuario->get_roles();  // Obtener la lista de roles
+
         // Incluimos la vista del formulario de creación de usuario
-        include(dirname(__FILE__) . '/../views/createUsuario.php');
+        include(dirname(__FILE__) . '/../views/usuario/createUsuario.php');
     }
 
     // Método para editar un usuario
@@ -71,15 +75,18 @@ class UsuarioController
 
             // Redirigimos a la lista de usuarios después de actualizar
             if ($this->usuario->update()) {
-                header("Location: index.php");
+                header("Location: ../routers/usuariosRouter.php");
                 exit();
             } else {
                 echo "Error al actualizar el usuario.";
             }
         }
 
+        // Obtener los roles para mostrarlos en el formulario
+        $roles = $this->usuario->get_roles();
+
         // Incluimos la vista del formulario de edición
-        include(dirname(__FILE__) . '/../views/updateUsuario.php');
+        include(dirname(__FILE__) . '/../views/usuario/updateUsuario.php');
     }
 
     // Método para mostrar la vista de confirmación de eliminación
@@ -90,7 +97,7 @@ class UsuarioController
         $this->usuario->get_usuario_by_id();
 
         // Incluimos la vista de confirmación de eliminación
-        include(dirname(__FILE__) . '/../views/deleteUsuario.php');
+        include(dirname(__FILE__) . '/../views/usuario/deleteUsuario.php');
     }
 
     // Método para confirmar y eliminar un usuario
@@ -101,7 +108,7 @@ class UsuarioController
 
             // Lógica de eliminación
             if ($this->usuario->delete()) {
-                header("Location: indexUsuario.php");
+                header("Location: ../routers/usuariosRouter.php");
                 exit();
             } else {
                 echo "Error al eliminar el usuario.";

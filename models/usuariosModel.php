@@ -53,7 +53,9 @@ class Usuario
     // Método para obtener todos los usuarios
     public function get_usuarios()
     {
-        $query = "SELECT * FROM " . $this->table_name;
+        //consulta para que muestre el nm del rol en la vista
+        $query =  "SELECT usuarios.*, r.nombre AS nombre_rol FROM " . $this->table_name . " usuarios
+              JOIN roles r ON usuarios.id_rol = r.id_rol";
         $result = $this->conn->prepare($query);
         $result->execute();
         return $result;
@@ -77,14 +79,21 @@ class Usuario
         $this->correo = $row['correo'];
         $this->password = $row['password'];
         $this->id_rol = $row['id_rol'];
+
     }
 
     // Método para actualizar un usuario
     public function update()
     {
+         // consulta que sino se proporcionó una nueva contraseña, no la actualizamos
         $query = "UPDATE " . $this->table_name . " 
+        SET nombre = :nombre, apellido = :apellido, correo = :correo, id_rol = :id_rol" .
+        (!empty($this->password) ? ", password = :password" : "") . "
+        WHERE id_usuario = :id_usuario";
+
+        /*$query = "UPDATE " . $this->table_name . " 
             SET nombre = :nombre, apellido = :apellido, correo = :correo, password = :password, id_rol = :id_rol
-            WHERE id_usuario = :id_usuario";
+            WHERE id_usuario = :id_usuario";*/
 
         // Limpiamos los datos
         $this->nombre = htmlspecialchars(strip_tags($this->nombre));
@@ -97,13 +106,16 @@ class Usuario
         // Preparamos la consulta
         $result = $this->conn->prepare($query);
 
-        // Enlazamos los parámetros
+         // Enlazamos los parámetros
         $result->bindParam(":nombre", $this->nombre);
         $result->bindParam(":apellido", $this->apellido);
         $result->bindParam(":correo", $this->correo);
-        $result->bindParam(":password", $this->password);
+        if (!empty($this->password)) {
+            $result->bindParam(":password", $this->password);
+        }
         $result->bindParam(":id_rol", $this->id_rol);
         $result->bindParam(":id_usuario", $this->id_usuario);
+
 
         // Ejecutamos la consulta
         if ($result->execute()) {
@@ -131,5 +143,14 @@ class Usuario
 
         return false;
     }
+
+       // Obtener la lista de estudiantes y pasarla al controller
+       public function get_roles()
+       {
+           $query = "SELECT id_rol, nombre FROM roles";
+           $result = $this->conn->prepare($query);
+           $result->execute();
+           return $result->fetchAll(PDO::FETCH_ASSOC);  // Devuelve el resultado como un array asociativo
+       }
 }
 ?>

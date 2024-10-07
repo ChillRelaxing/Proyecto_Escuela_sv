@@ -41,7 +41,8 @@ class Rol
     // Método para obtener todos los roles
     public function get_roles()
     {
-        $query = "SELECT * FROM " . $this->table_name;
+        //consulta
+        $query = "SELECT * FROM " . $this->table_name . " ORDER BY id_rol ASC";
         $result = $this->conn->prepare($query);
         $result->execute();
         return $result;

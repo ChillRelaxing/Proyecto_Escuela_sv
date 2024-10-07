@@ -1,6 +1,6 @@
 <?php
 require_once(dirname(__FILE__) . '/../config/conf.php');
-require_once(dirname(__FILE__) . '/../models/RolModel.php');
+require_once(dirname(__FILE__) . '/../models/rolModel.php');
 
 class RolController
 {
@@ -25,7 +25,7 @@ class RolController
         $roles = $result->fetchAll(PDO::FETCH_ASSOC);
 
         // Llamamos la vista que muestra la lista de roles
-        include(dirname(__FILE__) . '/../views/indexRol.php');
+        include(dirname(__FILE__) . '/../views/rol/indexRol.php');
     }
 
     // Método para crear un nuevo rol
@@ -37,7 +37,7 @@ class RolController
 
             // Redirigimos a la lista de roles después de crear el rol
             if ($this->rol->create()) {
-                header("Location: index.php");
+                header("Location: ../routers/rolesRouter.php");
                 exit();
             } else {
                 echo "Error al crear el rol.";
@@ -45,7 +45,7 @@ class RolController
         }
 
         // Incluimos la vista del formulario de creación de rol
-        include(dirname(__FILE__) . '/../views/createRol.php');
+        include(dirname(__FILE__) . '/../views/rol/createRol.php');
     }
 
     // Método para editar un rol
@@ -61,7 +61,7 @@ class RolController
 
             // Redirigimos a la lista de roles después de actualizar
             if ($this->rol->update()) {
-                header("Location: index.php");
+                header("Location: ../routers/rolesRouter.php");
                 exit();
             } else {
                 echo "Error al actualizar el rol.";
@@ -69,7 +69,7 @@ class RolController
         }
 
         // Incluimos la vista del formulario de edición
-        include(dirname(__FILE__) . '/../views/updateRol.php');
+        include(dirname(__FILE__) . '/../views/rol/updateRol.php');
     }
 
     // Método para mostrar la vista de confirmación de eliminación
@@ -80,7 +80,7 @@ class RolController
         $this->rol->get_rol_by_id();
 
         // Incluimos la vista de confirmación de eliminación
-        include(dirname(__FILE__) . '/../views/deleteRol.php');
+        include(dirname(__FILE__) . '/../views/rol/deleteRol.php');
     }
 
     // Método para confirmar y eliminar un rol
@@ -91,7 +91,7 @@ class RolController
 
             // Lógica de eliminación
             if ($this->rol->delete()) {
-                header("Location: indexRol.php");
+                header("Location: ../routers/rolesRouter.php");
                 exit();
             } else {
                 echo "Error al eliminar el rol.";
