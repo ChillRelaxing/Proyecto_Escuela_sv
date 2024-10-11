@@ -6,40 +6,45 @@
     <title>Crear Asignación Estudiante-Materia</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body>
-<br><br>
+<body class="bg-light">
     <div class="container mt-5">
-        <h2 class="text-center mb-4">Crear Asignación Estudiante-Materia</h2>
-        <form action="" method="POST">
-            <div class="mb-3">
-                <label for="id_estudiante" class="form-label">Selecciona el Estudiante</label>
-                <select name="id_estudiante" id="id_estudiante" class="form-select" required>
-                    <option value="">Seleccione un estudiante</option>
-                    <?php foreach ($estudiantes as $estudiante): ?>
-                        <option value="<?php echo $estudiante['id_estudiante']; ?>">
-                            <?php echo htmlspecialchars($estudiante['nombre'] . ' ' . $estudiante['apellido']); ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+        <div class="card">
+            <div class="card-header text-center">
+                <h4>Crear Asignación Estudiante-Materia</h4>
             </div>
+            <div class="card-body">
+                <form action="" method="POST">
+                    <div class="mb-3">
+                        <label for="id_estudiante" class="form-label">Selecciona el Estudiante</label>
+                        <select name="id_estudiante" id="id_estudiante" class="form-control" required>
+                            <option value="">Seleccione un estudiante</option>
+                            <?php foreach ($estudiantes as $estudiante): ?>
+                                <option value="<?php echo $estudiante['id_estudiante']; ?>">
+                                    <?php echo htmlspecialchars($estudiante['nombre'] . ' ' . $estudiante['apellido']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
 
-            <div class="mb-3">
-                <label for="id_materia_curso" class="form-label">Selecciona la Materia</label>
-                <select name="id_materia_curso" id="id_materia_curso" class="form-select" required>
-                    <option value="">Seleccione una materia</option>
-                    <?php foreach ($materias as $materia): ?>
-                        <option value="<?php echo $materia['id_materia_curso']; ?>">
-                            <?php echo htmlspecialchars($materia['nombre']); ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
+                    <div class="mb-3">
+                        <label for="id_materia_curso" class="form-label">Selecciona la Materia</label>
+                        <select name="id_materia_curso" id="id_materia_curso" class="form-control" required>
+                            <option value="">Seleccione una materia</option>
+                            <?php foreach ($materias as $materia): ?>
+                                <option value="<?php echo $materia['id_materia_curso']; ?>">
+                                    <?php echo htmlspecialchars($materia['nombre']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
 
-            <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-primary">Guardar Asignación</button>
-                <a href="../routers/estudianteMateriaRouter.php" class="btn btn-secondary">Cancelar</a>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Guardar Asignación</button>
+                        <a href="../routers/estudianteMateriaRouter.php" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
