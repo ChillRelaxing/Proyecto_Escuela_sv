@@ -66,20 +66,26 @@ class Reporte
         return $result;
     }
 
-   // Método para obtener un reporte por ID
-   public function get_reporte_by_id()
-   {
-       $query = "SELECT id_reporte, descripcion, fecha_reporte, id_estudiante, id_usuario, id_materia_curso 
-             FROM reportes 
-             WHERE id_reporte = :id";
+    public function get_reporte_by_id()
+    {
+        $query = "SELECT reportes.id_reporte, reportes.descripcion, reportes.fecha_reporte, 
+                     reportes.id_estudiante, estudiantes.nombre AS nombre_estudiante, 
+                     reportes.id_usuario, usuarios.nombre AS nombre_usuario, 
+                     reportes.id_materia_curso, materias_cursos.nombre AS nombre_materia
+              FROM reportes
+              JOIN estudiantes ON reportes.id_estudiante = estudiantes.id_estudiante
+              JOIN usuarios ON reportes.id_usuario = usuarios.id_usuario
+              JOIN materias_cursos ON reportes.id_materia_curso = materias_cursos.id_materia_curso
+              WHERE reportes.id_reporte = :id";
 
-       $result = $this->conn->prepare($query);
-       $result->bindParam(":id", $this->id_reporte);
-       $result->execute();
+        $result = $this->conn->prepare($query);
+        $result->bindParam(":id", $this->id_reporte);
+        $result->execute();
 
-       // Retorna el resultado como un array asociativo
-       return $result->fetch(PDO::FETCH_ASSOC);
-   }
+        // Retorna el resultado como un array asociativo
+        return $result->fetch(PDO::FETCH_ASSOC);
+    }
+
     // Método para actualizar un reporte
     public function update()
     {

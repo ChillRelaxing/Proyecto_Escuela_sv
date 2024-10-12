@@ -32,7 +32,7 @@
                 <select name="id_estudiante" id="id_estudiante" class="form-control" required>
                     <option value="" disabled selected>Seleccione un estudiante</option>
                     <?php foreach ($estudiantes as $estudiante): ?>
-                        <option value="<?= $estudiante['id_estudiante'] ?>" <?= $reporte['id_estudiante'] == $estudiante['id_estudiante'] ? 'selected' : '' ?>>
+                        <option value="<?= $estudiante['id_estudiante'] ?>" <?= isset($reporte['id_estudiante']) && $reporte['id_estudiante'] == $estudiante['id_estudiante'] ? 'selected' : '' ?>>
                             <?= htmlspecialchars($estudiante['nombre']) ?>
                         </option>
                     <?php endforeach; ?>
@@ -45,7 +45,7 @@
                 <select name="id_usuario" id="id_usuario" class="form-control" required>
                     <option value="" disabled selected>Seleccione un usuario</option>
                     <?php foreach ($usuarios as $usuario): ?>
-                        <option value="<?= $usuario['id_usuario'] ?>" <?= $reporte['id_usuario'] == $usuario['id_usuario'] ? 'selected' : '' ?>>
+                        <option value="<?= $usuario['id_usuario'] ?>" <?= isset($reporte['id_usuario']) && $reporte['id_usuario'] == $usuario['id_usuario'] ? 'selected' : '' ?>>
                             <?= htmlspecialchars($usuario['nombre']) ?>
                         </option>
                     <?php endforeach; ?>
@@ -58,7 +58,7 @@
                 <select name="id_materia_curso" id="id_materia_curso" class="form-control" required>
                     <option value="" disabled selected>Seleccione una materia o curso</option>
                     <?php foreach ($materias as $materia): ?>
-                        <option value="<?= $materia['id_materia_curso'] ?>" <?= $reporte['id_materia_curso'] == $materia['id_materia_curso'] ? 'selected' : '' ?>>
+                        <option value="<?= $materia['id_materia_curso'] ?>" <?= isset($reporte['id_materia_curso']) && $reporte['id_materia_curso'] == $materia['id_materia_curso'] ? 'selected' : '' ?>>
                             <?= htmlspecialchars($materia['nombre']) ?>
                         </option>
                     <?php endforeach; ?>

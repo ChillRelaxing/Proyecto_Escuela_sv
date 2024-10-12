@@ -15,9 +15,9 @@
             <li class="list-group-item"><strong>ID:</strong> <?php echo $reporte['id_reporte']; ?></li>
             <li class="list-group-item"><strong>Descripción:</strong> <?php echo $reporte['descripcion']; ?></li>
             <li class="list-group-item"><strong>Fecha del reporte:</strong> <?php echo $reporte['fecha_reporte']; ?></li>
-            <li class="list-group-item"><strong>Nombre del estudiante:</strong> <?php echo $reporte['id_estudiante']; ?></li>
-            <li class="list-group-item"><strong>Nombre profesor:</strong> <?php echo $reporte['id_usuario']; ?></li>
-            <li class="list-group-item"><strong>Materia o curso:</strong> <?php echo $reporte['id_materia_curso']; ?></li>
+            <li class="list-group-item"><strong>Nombre del estudiante:</strong> <?php echo $reporte['nombre_estudiante']; ?></li>
+            <li class="list-group-item"><strong>Nombre profesor:</strong> <?php echo $reporte['nombre_usuario']; ?></li>
+            <li class="list-group-item"><strong>Materia o curso:</strong> <?php echo $reporte['nombre_materia']; ?></li>
         </ul>
 
         <form action="../routers/reporteRouter.php?action=delete" method="POST" class="mt-4">
