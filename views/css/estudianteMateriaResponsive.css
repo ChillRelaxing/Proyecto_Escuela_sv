@@ -1,0 +1,70 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 576px) {
+    .container {
+        padding: 10px;
+    }
+    h2, h4 {
+        font-size: 1.5em;
+    }
+    .btn {
+        width: 100%;
+    }
+}
+
+/* Estilos para tablets */
+@media (min-width: 577px) and (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    h2, h4 {
+        font-size: 1.75em;
+    }
+    .btn {
+        width: 100%;
+    }
+}
+
+/* Estilos para pantallas más grandes */
+@media (min-width: 769px) {
+    .container {
+        padding: 20px;
+    }
+    h2, h4 {
+        font-size: 2em;
+    }
+    .card {
+        margin: auto;
+    }
+    table {
+        width: 100%;
+    }
+}
+
+/* Estilos para pantallas de escritorio grandes */
+@media (min-width: 992px) {
+    .container {
+        max-width: 1200px;
+    }
+    .table {
+        font-size: 1em;
+    }
+    .btn {
+        width: auto;
+    }
+}
+
+/* Estilos para pantallas extra grandes */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1400px;
+    }
+    .table {
+        font-size: 1.1em;
+    }
+}
+

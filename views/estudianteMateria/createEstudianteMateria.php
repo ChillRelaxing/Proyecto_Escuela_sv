@@ -4,51 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Asignación Estudiante-Materia</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../views/css/estudianteMateriaResponsive.css"> <!-- Enlace al archivo responsive -->
 </head>
 <body class="bg-light">
-    <div class="container mt-5">
-        <div class="card">
+    <div class="container mt-5 mb-5">
+        <div class="card shadow-lg p-4"> <!-- Tarjeta con sombra y relleno -->
             <div class="card-header text-center">
-                <h4>Crear Asignación Estudiante-Materia</h4>
+                <h2>Crear Asignación Estudiante-Materia</h2>
             </div>
             <div class="card-body">
+                <!-- Formulario para la creación de la asignación Estudiante-Materia -->
                 <form action="" method="POST">
-                    <div class="mb-3">
+                    <!-- Campo de selección de estudiante -->
+                    <div class="form-group mb-3">
                         <label for="id_estudiante" class="form-label">Selecciona el Estudiante</label>
                         <select name="id_estudiante" id="id_estudiante" class="form-control" required>
-                            <option value="">Seleccione un estudiante</option>
+                            <option value="" disabled selected>Seleccione un estudiante</option>
                             <?php foreach ($estudiantes as $estudiante): ?>
-                                <option value="<?php echo $estudiante['id_estudiante']; ?>">
-                                    <?php echo htmlspecialchars($estudiante['nombre'] . ' ' . $estudiante['apellido']); ?>
+                                <option value="<?= htmlspecialchars($estudiante['id_estudiante']) ?>">
+                                    <?= htmlspecialchars($estudiante['nombre'] . ' ' . $estudiante['apellido']) ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
 
-                    <div class="mb-3">
+                    <!-- Campo de selección de materia -->
+                    <div class="form-group mb-3">
                         <label for="id_materia_curso" class="form-label">Selecciona la Materia</label>
                         <select name="id_materia_curso" id="id_materia_curso" class="form-control" required>
-                            <option value="">Seleccione una materia</option>
+                            <option value="" disabled selected>Seleccione una materia</option>
                             <?php foreach ($materias as $materia): ?>
-                                <option value="<?php echo $materia['id_materia_curso']; ?>">
-                                    <?php echo htmlspecialchars($materia['nombre']); ?>
+                                <option value="<?= htmlspecialchars($materia['id_materia_curso']) ?>">
+                                    <?= htmlspecialchars($materia['nombre']) ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
 
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary">Guardar Asignación</button>
-                        <a href="../routers/estudianteMateriaRouter.php" class="btn btn-secondary">Cancelar</a>
+                    <!-- Botones de acción -->
+                    <div class="text-center"> <!-- Centrar los botones -->
+                        <button type="submit" class="btn btn-primary btn-lg">Guardar Asignación</button>
+                        <br><br>
+                        <a href="../routers/estudianteMateriaRouter.php" class="btn btn-secondary btn-lg">Cancelar</a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
