@@ -12,7 +12,7 @@
     <div class="container mt-5 mb-5">
         <div class="card shadow-lg p-4"> <!-- Tarjeta con sombra y relleno -->
             <div class="card-header text-center">
-                <h2>Editar Asignación Estudiante - Materia</h2>
+                <h2 class="text-primary">Editar Asignación Estudiante - Materia</h2> <!-- Título en azul -->
             </div>
             <div class="card-body">
                 <?php
@@ -56,7 +56,7 @@
                         <select name="id_materia_curso" id="id_materia_curso" class="form-control" required>
                             <?php
                             // Obtener la lista de materias
-                            $materias = $this->estudianteMateria->get_materias_cursos(); 
+                            $materias = $this->estudianteMateria->get_materias_cursos();
                             foreach ($materias as $materia) {
                                 // Seleccionar la materia actual
                                 $selected = ($materia['id_materia_curso'] == $asignacion['id_materia_curso']) ? 'selected' : '';
@@ -65,10 +65,10 @@
                             ?>
                         </select>
                     </div>
-
-                    <div class="d-grid gap-2"> <!-- Ajustes para botones -->
-                        <button type="submit" class="btn btn-primary btn-lg">Actualizar</button>
-                        <a href="../routers/estudianteMateriaRouter.php" class="btn btn-secondary btn-lg">Cancelar</a>
+                    <div class="text-center"> <!-- Centrar los botones -->
+                        <button type="submit" class="btn btn-primary btn-lg"">Actualizar</button>
+                        <br><br>
+                        <a href=" ../routers/estudianteMateriaRouter.php" class="btn btn-secondary btn-lg">Cancelar</a>
                     </div>
                 </form>
             </div>
