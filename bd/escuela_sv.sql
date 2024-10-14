@@ -34,7 +34,7 @@ CREATE TABLE estudiantes (
     correo VARCHAR(100) NOT NULL UNIQUE,
     telefono VARCHAR(15),
     carnet VARCHAR(50) NOT NULL UNIQUE,
-    modalidad ENUM('Presencial', 'virtual') NOT NULL
+    modalidad ENUM('Presencial', 'Virtual') NOT NULL
 );
 
 -- Crea tabla intermedia para la relación muchos a muchos entre estudiantes y materias/cursos
