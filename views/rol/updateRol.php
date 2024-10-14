@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actualizar Rol</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../views/css/rolResponsive.css"> <!-- Enlace al archivo responsive -->
 </head>
 <body>
 <br><br>
@@ -23,8 +24,11 @@
                     <input type="text" class="form-control" id="nombre" name="nombre" value="<?= htmlspecialchars($this->rol->nombre); ?>" required>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Actualizar Rol</button>
-                <a href="../routers/rolesRouter.php" class="btn btn-secondary">Cancelar</a>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class=" btn-success btn-sm mx-2">Actualizar Rol</button>
+                    <a href="../routers/rolesRouter.php" class=" btn-secondary btn-sm">Cancelar</a>
+                </div>
+
             </form>
         </div>
     </div>

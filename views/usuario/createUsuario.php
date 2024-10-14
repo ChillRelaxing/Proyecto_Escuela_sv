@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Usuario</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../views/css/usuarioResponsive.css"> <!-- Enlace al archivo responsive -->
 </head>
-<body>
+<body class="bg-light">
 <br><br>
     <div class="container">
         <div class="card m-auto mt-5 p-4">
@@ -26,7 +27,7 @@
                 </div>
                 <div class="form-group">
                     <label for="telefono">Password</label>
-                    <input type="text" class="form-control" id="telefono" name="telefono" required>
+                    <input type="password" class="form-control" id="telefono" name="telefono" required>
                 </div>
 
                 <div class="form-group">
@@ -37,10 +38,12 @@
                             <option value="<?= $rol['id_rol'] ?>"><?= $rol['nombre'] ?></option>
                         <?php endforeach; ?>
                     </select>
+                </div><br><br>
+
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn-primary btn-sm mx-2">Guardar Usuario</button>
+                    <a href="../routers/usuariosRouter.php" class=" btn-secondary btn-sm">Cancelar</a>
                 </div>
-                
-                <button type="submit" class="btn btn-success">Guardar Usuario</button>
-                <a href="../routers/usuariosRouter.php" class="btn btn-secondary">Cancelar</a>
             </form>
         </div>
     </div>

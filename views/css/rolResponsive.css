@@ -1,0 +1,90 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #dcdfe2;
+}
+
+h2, h4 {
+    background-color: rgb(245, 239, 239);
+    text-align: center;
+    color: #007bff; /* Color azul para títulos */}
+
+.form-control {
+    font-size: 1em;
+    
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 667px) {
+    table th, table td {
+        font-size: 11px; /* Reducir el tamaño del texto */
+    }
+    .container {
+        padding: 10px;
+    }
+    h2 {
+        font-size: 1.5em;
+    }
+    .btn {
+        font-size: 10px;
+        width: 40%; 
+        margin-bottom: 5px; /* Espacio entre botones */
+    }
+
+}
+
+/* Estilos para tablets */
+@media(min-width: 668px) and (max-width: 932px)  {
+    table th, table td {
+        font-size: 16px; /* Reducir el tamaño del texto */
+    }
+    .container {
+        padding: 10px;
+    }
+    h2 {
+        font-size: 1.75em;
+    }
+    .card {
+        margin: auto;
+    }
+    .btn {
+        font-size: 13px;
+        width: 40%; 
+        margin-bottom: 5px; /* Espacio entre botones */
+    }
+
+}
+
+/* Estilos para pantallas más grandes */
+@media (min-width: 933px) and (max-width: 1024px) {
+    table th, table td {
+        font-size: 20px; /* Reducir el tamaño del texto */
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+    .btn {
+        font-size: 16px;
+        width: 40%; 
+        margin-bottom: 5px; /* Espacio entre botones */
+    }
+
+}
+
+/* Estilos para pantallas extra grandes */
+@media (min-width: 1025px) and (max-width: 1200px) {
+    table th, table td {
+        font-size: 22px; /* Reducir el tamaño del texto */
+    }
+
+    h2 {
+        font-size: 2.5em;
+    }
+    .btn {
+        font-size: 16px;
+        width: 40%; 
+        margin-bottom: 5px; /* Espacio entre botones */
+    }
+
+}

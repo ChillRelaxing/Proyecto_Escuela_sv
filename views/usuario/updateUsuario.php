@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Usuario</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../views/css/usuarioResponsive.css"> <!-- Enlace al archivo responsive -->
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="card">
-            <div class="card-header">
-                <h2>Editar Usuario</h2>
+    <div class="container mt-5 mb-5">
+        <div class="card shadow-lg p-4"> <!-- Tarjeta con sombra y relleno -->
+            <div class="card-header text-center">
+                <h2 class="text-primary">Editar Usuario</h2>
             </div>
+
             <div class="card-body">
                 <!-- Formulario para editar usuario -->
                 <form action="../routers/usuariosRouter.php?action=edit&id=<?= $this->usuario->id_usuario ?>" method="POST">
@@ -48,12 +50,15 @@
                     </div>
 
                     <input type="hidden" name="id_usuario" value="<?= $this->usuario->id_usuario ?>">
-
-                    <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
-                    <a href="../routers/usuariosRouter.php" class="btn btn-secondary">Cancelar</a>
+                    
+                    <div class="form-group text-center mt-4">
+                        <button type="submit" class=" btn-success btn-sm mx-2">Actualizar Usuario</button><br><br>
+                        <a href="../routers/usuariosRouter.php" class=" btn-secondary btn-sm">Cancelar</a> 
+                    </div>
                 </form>
             </div>
         </div>
+
     </div>
 </body>
 </html>
