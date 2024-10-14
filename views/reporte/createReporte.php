@@ -66,7 +66,7 @@
                         <button type="submit" class="btn btn-primary btn-lg">Crear reporte</button>
                         <br>
                         <br>
-                        <a href="../routers/reporteRouter.php" class="btn btn-secondary btn-lg">Salir</a>
+                        <a href="../routers/reporteRouter.php" class="btn btn-secondary btn-lg">Cancelar</a>
                     </div>
                 </form>
             </div>

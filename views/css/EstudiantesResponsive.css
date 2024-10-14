@@ -1,0 +1,96 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+h2, h4 {
+    color: #007bff; /* Color azul para títulos */
+}
+
+.form-control {
+    font-size: 1em;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 576px) {
+    .container {
+        padding: 10px;
+    }
+    h2, h4 {
+        font-size: 1.5em;
+    }
+    .btn {
+        width: 100%;
+    }
+    .form-control, .table {
+        font-size: 0.9em;
+    }
+}
+
+/* Estilos para tablets */
+@media (min-width: 577px) and (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    h2, h4 {
+        font-size: 1.75em;
+    }
+    .btn {
+        width: 100%;
+    }
+    .form-control, .table {
+        font-size: 1em;
+    }
+}
+
+/* Estilos para pantallas más grandes */
+@media (min-width: 769px) {
+    .container {
+        padding: 20px;
+    }
+    h2, h4 {
+        font-size: 2em;
+    }
+    .card {
+        margin: auto;
+    }
+    .form-control, .table {
+        font-size: 1em;
+    }
+    table {
+        width: 100%;
+    }
+}
+
+/* Estilos para pantallas de escritorio grandes */
+@media (min-width: 992px) {
+    .container {
+        max-width: 1200px;
+    }
+    h2, h4 {
+        font-size: 2.25em;
+    }
+    .btn {
+        width: auto;
+    }
+    .form-control, .table {
+        font-size: 1em;
+    }
+}
+
+/* Estilos para pantallas extra grandes */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1400px;
+    }
+    h2, h4 {
+        font-size: 2.5em;
+    }
+    .table {
+        font-size: 1.1em;
+    }
+    .form-control {
+        font-size: 1.1em;
+    }
+}

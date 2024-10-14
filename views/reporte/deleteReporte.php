@@ -1,6 +1,7 @@
 <!-- deleteReporte.php -->
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../views/css/reporteResponsive.css"> <!-- Enlace al archivo responsive -->
 </head>
+
 <body class="bg-light">
     <div class="container mt-5 mb-5">
         <div class="card shadow-lg p-4"> <!-- Tarjeta con sombra y relleno -->
@@ -28,7 +30,7 @@
                 <form action="../routers/reporteRouter.php?action=delete" method="POST" class="text-center">
                     <!-- Campo oculto para el ID del reporte -->
                     <input type="hidden" name="id" value="<?php echo $reporte['id_reporte']; ?>">
-                    
+
                     <button type="submit" class="btn btn-danger btn-lg">Sí, eliminar</button>
                     <br>
                     <br>
@@ -40,4 +42,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

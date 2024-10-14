@@ -4,7 +4,7 @@ class Conexion {
     private $host = "localhost";
     private $db = "escuela_sv";
     private $user = "root";
-    private $pwd = "1234";
+    private $pwd = "";
 
     public $conn;
 
