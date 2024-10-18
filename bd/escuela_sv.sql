@@ -2,6 +2,15 @@
 CREATE DATABASE IF NOT EXISTS escuela_sv;
 USE escuela_sv;
  
+-- Leo503
+-- Villa503
+
+-- Haseo de contraseña
+UPDATE usuarios
+SET password = ''
+WHERE id_usuario = 1;
+ 
+ 
 -- Crear tabla de roles
 CREATE TABLE roles (
     id_rol INT AUTO_INCREMENT PRIMARY KEY,
@@ -77,14 +86,13 @@ SELECT * FROM estudiante_materia;
 -- Ver registros de la tabla reportes
 SELECT * FROM reportes;
 
-
 -- Insertar en la tabla roles
-INSERT INTO roles (nombre) VALUES ('admin'), ('profesor');
+INSERT INTO roles (nombre) VALUES ('Admin'), ('Profesor');
 
--- Insertar en la tabla usuarios (usando MD5 para la contraseña)
+-- Insertar en la tabla usuarios 
 INSERT INTO usuarios (nombre, apellido, correo, password, id_rol) 
-VALUES ('Juan', 'Pérez', 'juan.perez@escuela.com', MD5('password123'), 1), 
-       ('Ana', 'Gómez', 'ana.gomez@escuela.com', MD5('password456'), 2);
+VALUES ('Juan', 'Pérez', 'juan.perez@escuela.com', ('Leo503'), 1),
+       ('Ana', 'Gómez', 'ana.gomez@escuela.com', ('Villa503'), 2);
 
 -- Insertar en la tabla materias/cursos
 INSERT INTO materias_cursos (nombre, descripcion) 

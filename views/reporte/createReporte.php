@@ -1,3 +1,22 @@
+<?php
+session_start();
+ob_start();
+
+// Verificamos si el usuario está autenticado
+if (!isset($_SESSION['usuarios']) || empty($_SESSION['usuarios'])) {
+    header('Location: ../../index.php');
+    exit;
+}
+
+// Verificamos el rol del usuario
+if ($_SESSION['roles'] != 'Admin' && $_SESSION['roles'] != 'Profesor') {
+    echo "Acceso denegado";  // Depuración antes de 
+    header('Location: ../views/auth/accessDenied.php');
+    exit;
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>

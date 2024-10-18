@@ -1,3 +1,21 @@
+<?php
+session_start();
+ob_start();
+
+// Verificamos si el usuario está autenticado
+if (!isset($_SESSION['usuarios']) || empty($_SESSION['usuarios'])) {
+    header('Location: ../../index.php');
+    exit;
+}
+
+// Verificamos el rol del usuario
+if ($_SESSION['roles'] != 'Admin') {
+    echo "Acceso denegado";  // Mensaje de depuración antes de redireccionar
+    header('Location: ../views/auth/accessDenied.php');
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,6 +27,20 @@
 </head>
 <body>
 <br><br>
+
+    <!-- Mostramos el nombre del usuario y su rol -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 text-right">
+                <p>Bienvenido, <strong><?= htmlspecialchars($_SESSION['usuarios']); ?></strong> (Rol: <?= htmlspecialchars($_SESSION['roles']); ?>)</p>
+                <!-- Botón de salir -->
+                <form action="../views/auth/exit.php" method="POST" class="d-inline">
+                    <button type="submit" class="btn btn-danger">Salir</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="container-fluid">
         <div class="card m-auto mt-5 p-4">
             <h2 class="text-center">Lista de Usuarios</h2><br>
