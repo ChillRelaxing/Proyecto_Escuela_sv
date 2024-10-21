@@ -28,7 +28,7 @@ if ($_SESSION['roles'] != 'Admin') {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-<br><br>
+<br>
 
     <!-- Mostramos el nombre del usuario y su rol -->
     <div class="container-fluid">
