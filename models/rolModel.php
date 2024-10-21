@@ -108,5 +108,17 @@ class Rol
 
         return false;
     }
+//buscador ajax roles
+    public function search_roles($consulta)
+    {
+        $consulta = "%" . $consulta . "%";
+        $sql = "SELECT * FROM " . $this->table_name . " 
+                WHERE nombre LIKE :consulta";  // Búsqueda por nombre del rol, selc td la tbla
+
+        $prdt = $this->conn->prepare($sql); //prepara cons
+        $prdt->bindParam(':consulta', $consulta); //
+        $prdt->execute();
+        return $prdt;
+    }
 }
 ?>

@@ -117,5 +117,40 @@ class UsuarioController
             echo "ID de usuario no proporcionado.";
         }
     }
+
+    public function search($query)
+    {
+        // Llamamos al método del modelo que realiza la búsqueda
+        $result = $this->usuario->search_usuarios($query);
+        $usuarios = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        // Generamos el HTML para mostrar los resultados
+        $output = '';
+        if (count($usuarios) > 0) {
+            foreach ($usuarios as $usuario) {
+                $output .= '
+                    <tr>
+                        <td>' . $usuario['id_usuario'] . '</td>
+                        <td>' . $usuario['nombre'] . '</td>
+                        <td>' . $usuario['apellido'] . '</td>
+                        <td>' . $usuario['correo'] . '</td>
+                        <td>' . $usuario['password'] . '</td>
+                        <td>' . $usuario['nombre_rol'] . '</td>
+                        <td>
+                            <a href="../routers/usuariosRouter.php?action=edit&id=' . $usuario['id_usuario'] . '" class="btn btn-warning btn-sm mb-1">Editar</a>
+                            <a href="../routers/usuariosRouter.php?action=confirmDelete&id=' . $usuario['id_usuario'] . '" class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                ';
+            }
+        } else {
+            $output = '<tr><td colspan="4">No se encontraron usuarios.</td></tr>';
+        }
+        
+        echo $output;
+    }
+
+
+
 }
 ?>

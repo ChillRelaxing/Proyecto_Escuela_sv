@@ -5,6 +5,9 @@ require_once '../controllers/usuarioController.php';
 // Capturamos la opción de la URL
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 $id = isset($_GET['id']) ? $_GET['id'] : '';
+//AJAX
+$query = isset($_GET['query']) ? $_GET['query'] : '';
+
 
 // Instanciamos el controlador
 $controller = new usuarioController();
@@ -43,6 +46,10 @@ switch ($action) {
         } else {
             $controller->index();
         }
+        break;
+    
+    case 'search':  //para manejar la búsqueda
+        $controller->search($query);
         break;
 
     default:

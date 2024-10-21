@@ -100,5 +100,34 @@ class RolController
             echo "ID de rol no proporcionado.";
         }
     }
+
+    /**BUSCADOR */
+    public function buscar($consulta)
+    {
+        // Llamamos al método del modelo que realiza la búsqueda
+        $result = $this->rol->search_roles($consulta); // Aquí aseguramos que $this->rol no sea null
+        $roles = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        // Generamos el HTML para mostrar los resultados
+        $newTableDato = '';
+        if (count($roles) > 0) {
+            foreach ($roles as $rol) {
+                $newTableDato .= '
+                    <tr>
+                        <td>' . $rol['id_rol'] . '</td>
+                        <td>' . $rol['nombre'] . '</td>
+                        <td>
+                            <a href="../routers/rolesRouter.php?action=edit&id=' . $rol['id_rol'] . '" class="btn btn-warning btn-sm mb-1">Editar</a>
+                            <a href="../routers/rolesRouter.php?action=confirmDelete&id=' . $rol['id_rol'] . '" class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                ';
+            }
+        } else {
+            $newTableDato = '<tr><td colspan="4">No se encontraron roles.</td></tr>';
+        }
+        
+        echo $newTableDato;
+    }
 }
 ?>

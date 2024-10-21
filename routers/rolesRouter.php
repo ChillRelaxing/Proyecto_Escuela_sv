@@ -5,6 +5,9 @@ require_once '../controllers/rolController.php';
 // Capturamos la opción de la URL//p
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 $id = isset($_GET['id']) ? $_GET['id'] : '';
+//AJAX
+$consulta = isset($_GET['consulta']) ? $_GET['consulta'] : '';
+
 
 // Instanciamos el controlador
 $controller = new rolController();
@@ -44,6 +47,10 @@ switch ($action) {
         } else {
             $controller->index();
         }
+        break;
+    
+    case 'buscar':  //para manejar la búsqueda
+        $controller->buscar($consulta);
         break;
 
     default:

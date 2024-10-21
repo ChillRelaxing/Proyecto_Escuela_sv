@@ -144,13 +144,32 @@ class Usuario
         return false;
     }
 
-       // Obtener la lista de estudiantes y pasarla al controller
-       public function get_roles()
-       {
-           $query = "SELECT id_rol, nombre FROM roles";
-           $result = $this->conn->prepare($query);
-           $result->execute();
-           return $result->fetchAll(PDO::FETCH_ASSOC);  // Devuelve el resultado como un array asociativo
-       }
+    // Obtener la lista de estudiantes y pasarla al controller
+    public function get_roles()
+    {
+        $query = "SELECT id_rol, nombre FROM roles";
+        $result = $this->conn->prepare($query);
+        $result->execute();
+        return $result->fetchAll(PDO::FETCH_ASSOC);  // Devuelve el resultado como un array asociativo
+    }
+
+    public function search_usuarios($query)
+    {
+        $query = "%" . $query . "%";
+        $sql = "SELECT usuarios.*, r.nombre AS nombre_rol 
+                FROM " . $this->table_name . " usuarios
+                JOIN roles r ON usuarios.id_rol = r.id_rol
+                WHERE usuarios.nombre LIKE :query
+                OR usuarios.apellido LIKE :query
+                OR usuarios.correo LIKE :query
+                OR r.nombre LIKE :query";  // Permitir búsqueda también por rol
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':query', $query);
+        $stmt->execute();
+        return $stmt;
+    }
+
+
 }
 ?>
