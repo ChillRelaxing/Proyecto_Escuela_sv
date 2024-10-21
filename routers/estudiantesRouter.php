@@ -5,6 +5,9 @@ require_once '../controllers/EstudiantesController.php';
 // Capturamos la opción de la URL
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 $id = isset($_GET['id']) ? $_GET['id'] : '';
+//AJAX
+$query_est = isset($_GET['query_est']) ? $_GET['query_est'] : '';
+
 
 // Instanciamos el controlador
 $controller = new EstudiantesController();
@@ -43,6 +46,10 @@ switch ($action) {
         } else {
             $controller->index();
         }
+        break;
+
+    case 'Estudiante_buscan':  //para manejar la búsqueda
+        $controller->Estudiante_buscan($query_est);
         break;
 
     default:

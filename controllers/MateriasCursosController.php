@@ -102,5 +102,35 @@ class MateriasCursosController
             echo "ID de rol no proporcionado.";
         }
     }
+
+    /**BUSCADOR */
+    public function materiacurso_buscar($query_mt_curso)
+    {
+        // Llamamos al método del modelo que realiza la búsqueda
+        $result = $this->materiacurso->search_materiacurso($query_mt_curso);
+        $materiacurso = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        // Generamos el HTML para mostrar los resultados
+        $output_mt_curso= '';
+        if (count($materiacurso) > 0) {
+            foreach ($materiacurso as $materiacursos) {
+                $output_mt_curso .= '
+                    <tr>
+                        <td>' . $materiacursos['id_materia_curso'] . '</td>
+                        <td>' . $materiacursos['nombre'] . '</td>
+                        <td>' . $materiacursos['descripcion'] . '</td>
+                        <td>
+                            <a href="../routers/materiasCursosRouter.php?action=edit&id=' . $materiacursos['id_materia_curso'] . '" class="btn btn-warning btn-sm mb-1">Editar</a>
+                            <a href="../routers/materiasCursosRouter.php?action=confirmDelete&id=' . $materiacursos['id_materia_curso'] . '" class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                ';
+            }
+        } else {
+            $output_mt_curso= '<tr><td colspan="4">No se encontraron considencias.</td></tr>';
+        }
+        
+        echo $output_mt_curso;
+    }
 }
 ?>

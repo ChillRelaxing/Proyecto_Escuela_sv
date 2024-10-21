@@ -5,6 +5,8 @@ require_once '../controllers/MateriasCursosController.php';
 // Capturamos la opción de la URL
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 $id = isset($_GET['id']) ? $_GET['id'] : '';
+//AJAX
+$query_mt_curso = isset($_GET['query_mt_curso']) ? $_GET['query_mt_curso'] : '';
 
 // Instanciamos el controlador
 $controller = new MateriasCursosController();
@@ -45,6 +47,10 @@ switch ($action) {
         }
         break;
 
+    case 'materiacurso_buscar':  //para manejar la búsqueda
+        $controller->materiacurso_buscar($query_mt_curso);
+        break;
+    
     default:
         $controller->index();
         break;

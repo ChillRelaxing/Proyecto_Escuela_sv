@@ -115,5 +115,17 @@ class MateriasCursos
 
         return false;
     }
+
+    public function search_materiacurso($query_mt_curso)
+    {
+        $query_mt_curso = "%" . $query_mt_curso . "%";
+        $sql= "SELECT * FROM " . $this->table_name . " 
+                WHERE nombre LIKE :query_mt_curso";
+
+        $result = $this->conn->prepare($sql);
+        $result->bindParam(':query_mt_curso', $query_mt_curso);
+        $result->execute();
+        return $result;
+    }
 }
 ?>

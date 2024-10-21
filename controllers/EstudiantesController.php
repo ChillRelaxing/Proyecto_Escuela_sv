@@ -73,12 +73,12 @@ class EstudiantesController
     }
 
     public function confirmDelete($id)
-{
-    $this->estudiante->id_estudiante = $id;
-    $this->estudiante->get_estudiantes_by_id(); // Obtener los detalles del estudiante
+    {
+        $this->estudiante->id_estudiante = $id;
+        $this->estudiante->get_estudiantes_by_id(); // Obtener los detalles del estudiante
 
-    include(dirname(__FILE__) . '/../views/Estudiantes/deleteEstudiantes.php'); // Incluir la vista de confirmación
-}
+        include(dirname(__FILE__) . '/../views/Estudiantes/deleteEstudiantes.php'); // Incluir la vista de confirmación
+    }
     
     public function delete($id)
     {
@@ -90,6 +90,41 @@ class EstudiantesController
             echo "Error al eliminar el estudiante.";
         }
     }
+
+    /**BUSCADOR */
+    public function Estudiante_buscan($query_est)
+    {
+        // Llamamos al método del modelo que realiza la búsqueda
+        $result = $this->estudiante->search_estudiante($query_est);
+        $estudiantes = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        // Generamos el HTML para mostrar los resultados
+        $output_est = '';
+        if (count($estudiantes) > 0) {
+            foreach ($estudiantes as $estudiante) {
+                $output_est .= '
+                    <tr>
+                        <td>' . $estudiante['id_estudiante'] . '</td>
+                        <td>' . $estudiante['nombre'] . '</td>
+                        <td>' . $estudiante['apellido'] . '</td>
+                        <td>' . $estudiante['correo'] . '</td>
+                        <td>' . $estudiante['telefono'] . '</td>
+                        <td>' . $estudiante['carnet'] . '</td>
+                        <td>' . $estudiante['modalidad'] . '</td>
+                        <td>
+                            <a href="../routers/estudiantesRouter.php?action=edit&id=' . $estudiante['id_estudiante'] . '" class="btn btn-warning btn-sm mb-1">Editar</a>
+                            <a href="../routers/estudiantesRouter.php?action=confirmDelete&id=' . $estudiante['id_estudiante'] . '" class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                ';
+            }
+        } else {
+            $output_est= '<tr><td colspan="4">No se encontraron considencias.</td></tr>';
+        }
+        
+        echo $output_est;
+    }
+    
 }
 
 ?>

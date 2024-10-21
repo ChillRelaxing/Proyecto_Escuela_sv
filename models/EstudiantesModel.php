@@ -148,4 +148,17 @@ class Estudiantes
 
     return false;
 }
+
+    public function search_estudiante($query_est)
+    {
+        $query_est = "%" . $query_est . "%";
+        $sql= "SELECT * FROM " . $this->table_name . " 
+                WHERE carnet LIKE :query_est
+                OR modalidad LIKE :query_est";
+
+        $result = $this->conn->prepare($sql);
+        $result->bindParam(':query_est', $query_est);
+        $result->execute();
+        return $result;
+    }
 }
