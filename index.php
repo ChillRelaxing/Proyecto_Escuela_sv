@@ -4,7 +4,7 @@ session_start(); // Iniciamos la sesión
 // Aquí va tu lógica para manejar el inicio de sesión
 
 if (isset($_GET['logout']) && $_GET['logout'] == 1) {
-    echo "<p>Has cerrado sesión exitosamente.</p>";
+    $logoutMessage = "Has cerrado sesión exitosamente.";
 }
 
 include_once 'config/conf.php';
@@ -95,6 +95,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             border-color: #f5c6cb;
             color: #721c24;
         }
+        
+        .alert-success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
     </style>
 </head>
 
@@ -113,15 +119,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
         </form>
         <?php
+        // Mostramos un mensaje de éxito si se cerró sesión
+        if (isset($logoutMessage)) {
+            echo '<div class="alert alert-success mt-3" id="logoutAlert">' . htmlspecialchars($logoutMessage) . '</div>';
+        }
+        
         // Mostramos un mensaje de error si las credenciales son incorrectas
         if (isset($error)) {
-            echo '<div class="alert alert-danger mt-3">' . htmlspecialchars($error) . '</div>';
+            echo '<div class="alert alert-danger mt-3" id="errorAlert">' . htmlspecialchars($error) . '</div>';
         }
         ?>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9K2rMyI9ibW3VVNQ5g5j2Q6w0AfK7zE3OfIuM2w4iA26efSHwUq" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl0J5Fs7Z1W5n5B6O0x6V6w5rY7I+LBk+xLTM8fbJMT" crossorigin="anonymous"></script>
+    <script>
+        // Función para ocultar alertas después de 3 segundos
+        function hideAlert(alertId) {
+            const alertElement = document.getElementById(alertId);
+            if (alertElement) {
+                setTimeout(() => {
+                    alertElement.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // Ocultar alertas de error y logout
+        hideAlert('errorAlert');
+        hideAlert('logoutAlert');
+    </script>
 </body>
 
 </html>
