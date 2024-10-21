@@ -242,7 +242,7 @@ class UsuarioController
             $pdf->Cell(40, 10, $usuario['nombre'], 1);
             $pdf->Cell(40, 10, $usuario['apellido'], 1);
             $pdf->Cell(70, 10, $usuario['correo'], 1);
-            $pdf->Cell(20, 10, $usuario['id_rol'], 1);
+            $pdf->Cell(20, 10, $usuario['nombre_rol'], 1);
             $pdf->Ln(); // Nueva línea
         }
 
