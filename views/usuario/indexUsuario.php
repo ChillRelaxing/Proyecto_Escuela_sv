@@ -28,8 +28,7 @@ if ($_SESSION['roles'] != 'Admin') {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-<br><br>
-
+    <br>
     <!-- Mostramos el nombre del usuario y su rol -->
     <div class="container-fluid">
         <div class="row">
@@ -45,8 +44,8 @@ if ($_SESSION['roles'] != 'Admin') {
             </div>
             
         </div>
-    </div><br>
-
+    </div>
+    <br>
 
     <div class="container-fluid">
         <div class="card m-auto mt-5 p-4">
@@ -56,14 +55,16 @@ if ($_SESSION['roles'] != 'Admin') {
             <div class="container-sm">
                 <form action="" method="get">
                     <!-- Campo de búsqueda -->
-                    <div class="input-group mb-3">
-                        <input type="text" id="buscarUsuario" class="form-control mx-2" placeholder="Buscar usuario por nombre o rol..." aria-label="Recipient's username" aria-describedby="button-addon2" >
-                        <!--<a href="../routers/usuariosRouter.php?action=create" class="btn btn-success" style="margin-left:10px">Agregar Usuario</a> -->
-    
-
+                    <div class="input-group mb-2">
                         <div class="col-12 col-md-6 col-lg-3">
                             <a href="../routers/usuariosRouter.php?action=create" class="btn btn-success btn-block w-100 mb-3">Crear Usuario</a>
                         </div>
+                        <div class="d-flex justify-content-end mb-3">
+                            <a href="../routers/usuariosRouter.php?action=exportPDF" class="btn btn-danger btn-sm mx-4">Exportar a PDF</>    
+                            <a href="../routers/usuariosRouter.php?action=exportExcel" class="btn btn-warning btn-sm mx-4">Exportar a Excel</a>
+                            <a href="../routers/usuariosRouter.php?action=exportCSV" class="btn btn-info btn-sm mx-4">Exportar a CSV</a>
+                        </div>
+                        <input type="text" id="buscarUsuario" class="form-control mx-4" placeholder="Buscar usuario por nombre o rol." aria-label="Recipient's username" aria-describedby="button-addon2" >
                     </div>
                 </form>
             </div>
@@ -105,8 +106,6 @@ if ($_SESSION['roles'] != 'Admin') {
                     </div> 
                 </div>
             </div>
-
-
         </div>
     </div>
 </body>
@@ -114,5 +113,3 @@ if ($_SESSION['roles'] != 'Admin') {
 
 <!--para el ajaz funcione--->
 <script src="../js/buscadorUsuario.js"></script>
-
-

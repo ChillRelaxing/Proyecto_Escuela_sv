@@ -44,8 +44,8 @@ if ($_SESSION['roles'] != 'Admin') {
                     <input type="email" class="form-control" id="correo" name="correo" required>
                 </div>
                 <div class="form-group">
-                    <label for="telefono">Password</label>
-                    <input type="password" class="form-control" id="telefono" name="telefono" required>
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
                 </div>
 
                 <div class="form-group">

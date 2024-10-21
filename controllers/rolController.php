@@ -1,6 +1,7 @@
 <?php
 require_once(dirname(__FILE__) . '/../config/conf.php');
 require_once(dirname(__FILE__) . '/../models/rolModel.php');
+require_once(dirname(__FILE__) . '/../fpdf/fpdf.php');
 
 class RolController
 {
@@ -128,6 +129,105 @@ class RolController
         }
         
         echo $newTableDato;
+    }
+
+    // Función para exportar roles a CSV
+    public function exportToCSV()
+    {
+        // Recuperar los roles
+        $result = $this->rol->get_roles();
+        $roles = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        // Nombre del archivo CSV
+        $filename = "roles_" . date('Y-m-d') . ".csv";
+
+        // Cabeceras para forzar descarga
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=' . $filename);
+
+        // Crear una tabla en formato CSV
+        echo "ID,Nombre\n";
+
+        // Escribir los datos
+        foreach ($roles as $rol) {
+            echo "{$rol['id_rol']},{$rol['nombre']}\n";
+        }
+
+        exit();
+    }
+
+    // Función para exportar roles a Excel
+    public function exportToExcel()
+    {
+        // Recuperar los roles
+        $result = $this->rol->get_roles();
+        $roles = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        // Nombre del archivo Excel
+        $filename = "roles_" . date('Y-m-d') . ".xls";
+
+        // Cabeceras para forzar descarga
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment; filename=' . $filename);
+
+        // Crear una tabla HTML para Excel
+        echo "<table border='1'>";
+        echo "<tr><th>ID</th><th>Nombre</th></tr>";
+
+        // Escribir los datos
+        foreach ($roles as $rol) {
+            echo "<tr>";
+            echo "<td>{$rol['id_rol']}</td>";
+            echo "<td>{$rol['nombre']}</td>";
+            echo "</tr>";
+        }
+
+        echo "</table>";
+        exit();
+    }
+
+    // Función para exportar roles a PDF
+    public function exportToPDF()
+    {
+        // Recuperar los roles
+        $result = $this->rol->get_roles();
+        $roles = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        // Crear una instancia de FPDF
+        $pdf = new FPDF();
+        $pdf->AddPage();
+    
+        // Establecer fuente
+        $pdf->SetFont('Arial', 'B', 16);
+        $pdf->Cell(0, 10, 'Lista de Roles', 0, 1, 'C'); // Título centrado
+
+        // Calcular el ancho total de la tabla (20 + 40 = 60)
+        $totalWidth = 60;
+        $pageWidth = $pdf->GetPageWidth(); // Obtener el ancho de la página
+        $xOffset = ($pageWidth - $totalWidth) / 2; // Calcular el desplazamiento desde la izquierda para centrar
+
+        // Establecer encabezados de tabla y centrar
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->SetX($xOffset); // Desplazar X para centrar
+        $pdf->Cell(20, 10, 'ID', 1);
+        $pdf->Cell(40, 10, 'Nombre', 1);
+        $pdf->Ln();
+
+        // Establecer fuente para los datos
+        $pdf->SetFont('Arial', '', 12);
+
+        // Agregar los roles a la tabla y centrar
+        foreach ($roles as $rol) {
+            $pdf->SetX($xOffset); // Desplazar X para centrar cada fila
+            $pdf->Cell(20, 10, $rol['id_rol'], 1);
+            $pdf->Cell(40, 10, $rol['nombre'], 1);
+            $pdf->Ln(); // Nueva línea
+        }
+
+        // Descargar el PDF
+        $pdfFileName = "roles_" . date('Y-m-d') . ".pdf";
+        $pdf->Output('D', $pdfFileName);
+        exit();
     }
 }
 ?>

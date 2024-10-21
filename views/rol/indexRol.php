@@ -45,8 +45,9 @@ if ($_SESSION['roles'] != 'Admin') {
             </div>
         </div>
     </div>
+    <br>
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="card m-auto mt-5 p-4">
             <h2>Lista de Roles</h2><br>
 
@@ -55,11 +56,15 @@ if ($_SESSION['roles'] != 'Admin') {
                 <form action="" method="get">
                     <!-- Campo de búsqueda -->
                     <div class="input-group mb-3">
-                        <input type="text" id="buscarRol" class="form-control mx-2" placeholder="Buscar rol..." aria-label="Recipient's username" aria-describedby="button-addon2" >
-
                         <div class="col-12 col-md-6 col-lg-3">
                             <a href="../routers/rolesRouter.php?action=create" class="btn btn-success btn-block w-100 mb-3">Crear Rol</a>
                         </div>
+                        <div class="d-flex justify-content-end mb-3">
+                            <a href="../routers/rolesRouter.php?action=exportPDF" class="btn btn-danger btn-sm mx-4">Exportar a PDF</>    
+                            <a href="../routers/rolesRouter.php?action=exportExcel" class="btn btn-warning btn-sm mx-4">Exportar a Excel</a>
+                            <a href="../routers/rolesRouter.php?action=exportCSV" class="btn btn-info btn-sm mx-4">Exportar a CSV</a>
+                        </div>
+                        <input type="text" id="buscarRol" class="form-control mx-2" placeholder="Buscar rol." aria-label="Recipient's username" aria-describedby="button-addon2" >
                     </div>
                 </form>
             </div>
@@ -81,7 +86,7 @@ if ($_SESSION['roles'] != 'Admin') {
                                 <td><?= htmlspecialchars($rol['nombre']); ?></td>
                                 <td>
                                     <a href="../routers/rolesRouter.php?action=edit&id=<?= $rol['id_rol']; ?>" class="btn btn-warning btn-sm mb-1">Editar</a>
-                                    <a href="../routers/rolesRouter.php?action=confirmDelete&id=<?= $rol['id_rol']; ?>" class="btn btn-danger btn-sm">Eliminar</a>
+                                    <a href="../routers/rolesRouter.php?action=confirmDelete&id=<?= $rol['id_rol']; ?>" class="btn btn-danger btn-sm mb-1">Eliminar</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

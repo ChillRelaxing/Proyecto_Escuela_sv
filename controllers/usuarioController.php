@@ -1,6 +1,7 @@
 <?php
 require_once(dirname(__FILE__) . '/../config/conf.php');
 require_once(dirname(__FILE__) . '/../models/usuariosModel.php');
+require_once(dirname(__FILE__) . '/../fpdf/fpdf.php');
 
 class UsuarioController
 {
@@ -150,7 +151,105 @@ class UsuarioController
         echo $output;
     }
 
+    // Función para exportar usuarios a CSV
+    public function exportToCSV()
+    {
+        // Recuperar los usuarios
+        $result = $this->usuario->get_usuarios();
+        $usuarios = $result->fetchAll(PDO::FETCH_ASSOC);
 
+        // Nombre del archivo CSV
+        $filename = "usuarios_" . date('Y-m-d') . ".csv";
 
+        // Cabeceras para forzar descarga
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=' . $filename);
+
+        // Crear una tabla en formato CSV
+        echo "ID,Nombre,Apellido,Correo,Rol\n";
+
+        // Escribir los datos
+        foreach ($usuarios as $usuario) {
+            echo "{$usuario['id_usuario']},{$usuario['nombre']},{$usuario['apellido']},{$usuario['correo']},{$usuario['id_rol']}\n";
+        }
+
+        exit();
+    }
+
+    // Función para exportar usuarios a Excel
+    public function exportToExcel()
+    {
+        // Recuperar los usuarios
+        $result = $this->usuario->get_usuarios();
+        $usuarios = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        // Nombre del archivo Excel
+        $filename = "usuarios_" . date('Y-m-d') . ".xls";
+
+        // Cabeceras para forzar descarga
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment; filename=' . $filename);
+
+        // Crear una tabla HTML para Excel
+        echo "<table border='1'>";
+        echo "<tr><th>ID</th><th>Nombre</th><th>Apellido</th><th>Correo</th><th>Rol</th></tr>";
+
+        // Escribir los datos
+        foreach ($usuarios as $usuario) {
+            echo "<tr>";
+            echo "<td>{$usuario['id_usuario']}</td>";
+            echo "<td>{$usuario['nombre']}</td>";
+            echo "<td>{$usuario['apellido']}</td>";
+            echo "<td>{$usuario['correo']}</td>";
+            echo "<td>{$usuario['id_rol']}</td>";
+            echo "</tr>";
+        }
+
+        echo "</table>";
+        exit();
+    }
+
+    // Función para exportar usuarios a PDF
+    public function exportToPDF()
+    {
+        // Recuperar los usuarios
+        $result = $this->usuario->get_usuarios();
+        $usuarios = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        // Crear una instancia de FPDF
+        $pdf = new FPDF();
+        $pdf->AddPage();
+    
+        // Establecer fuente
+        $pdf->SetFont('Arial', 'B', 16);
+        $pdf->Cell(0, 10, 'Lista de Usuarios', 0, 1, 'C'); // Título centrado
+
+        // Establecer encabezados de tabla
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(20, 10, 'ID', 1);
+        $pdf->Cell(40, 10, 'Nombre', 1);
+        $pdf->Cell(40, 10, 'Apellido', 1);
+        $pdf->Cell(70, 10, 'Correo', 1);
+        $pdf->Cell(20, 10, 'Rol', 1);
+        $pdf->Ln();
+
+        // Establecer fuente para los datos
+        $pdf->SetFont('Arial', '', 12);
+
+        // Agregar los usuarios a la tabla
+        foreach ($usuarios as $usuario) {
+            $pdf->Cell(20, 10, $usuario['id_usuario'], 1);
+            $pdf->Cell(40, 10, $usuario['nombre'], 1);
+            $pdf->Cell(40, 10, $usuario['apellido'], 1);
+            $pdf->Cell(70, 10, $usuario['correo'], 1);
+            $pdf->Cell(20, 10, $usuario['id_rol'], 1);
+            $pdf->Ln(); // Nueva línea
+        }
+
+        // Descargar el PDF
+        $pdfFileName = "usuarios_" . date('Y-m-d') . ".pdf";
+        $pdf->Output('D', $pdfFileName);
+        exit();
+    }
 }
 ?>

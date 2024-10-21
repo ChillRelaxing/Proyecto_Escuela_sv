@@ -52,9 +52,20 @@ switch ($action) {
         $controller->search($query);
         break;
 
+    case 'exportCSV':
+        $controller->exportToCSV();
+        break;
+        
+    case 'exportExcel':
+        $controller->exportToExcel();
+        break;
+        
+    case 'exportPDF':
+        $controller->exportToPDF();
+        break;
+
     default:
         $controller->index();
         break;
 }
-
 ?>
