@@ -159,4 +159,24 @@ class Reporte
         $result->execute();
         return $result->fetchAll(PDO::FETCH_ASSOC);  // Devuelve el resultado como un array asociativo
     }
+
+    public function search_reporte($query_reporte)
+    {
+        $query_reporte = "%" . $query_reporte . "%";
+
+        $query = "SELECT reportes.id_reporte, reportes.descripcion, reportes.fecha_reporte, 
+                          estudiantes.nombre AS nombre_estudiante, 
+                          usuarios.nombre  AS nombre_usuario, 
+                          materias_cursos.nombre AS nombre_materia
+                   FROM reportes
+                   JOIN estudiantes ON reportes.id_estudiante = estudiantes.id_estudiante
+                   JOIN usuarios ON reportes.id_usuario = usuarios.id_usuario
+                   JOIN materias_cursos ON reportes.id_materia_curso = materias_cursos.id_materia_curso
+            WHERE estudiantes.nombre  LIKE :query_reporte OR usuarios.nombre LIKE :query_reporte OR materias_cursos.nombre LIKE :query_reporte";
+
+        $result = $this->conn->prepare($query);
+        $result->bindParam(':query_reporte', $query_reporte);
+        $result->execute();
+        return $result;
+    }
 }

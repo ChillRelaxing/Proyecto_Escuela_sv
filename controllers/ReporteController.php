@@ -129,4 +129,39 @@ class ReporteController
             echo "ID no proporcionado.";
         }
     }
+
+        
+    /**BUSCADOR */
+    public function buscando($query_reporte)
+    {
+        // Llamamos al método del modelo que realiza la búsqueda
+        $result = $this->reporte->search_reporte($query_reporte);
+        $reportes = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        // Generamos el HTML para mostrar los resultados
+        $output_report = '';
+        if (count($reportes) > 0) {
+            foreach ($reportes as $reporte) {
+                $output_report .= '
+                    <tr>
+                        <td>' . $reporte['id_reporte'] . '</td>
+                        <td>' . $reporte['descripcion'] . '</td>
+                        <td>' . $reporte['fecha_reporte'] . '</td>
+                        <td>' . $reporte['nombre_estudiante'] . '</td>
+                        <td>' . $reporte['nombre_usuario'] . '</td>
+                        <td>' . $reporte['nombre_materia'] . '</td>
+
+                        <td>
+                            <a href="../routers/reporteRouter.php?action=edit&id=' . $reporte['id_reporte'] . '" class="btn btn-warning btn-sm mb-1">Editar</a>
+                            <a href="../routers/reporteRouter.php?action=confirmDelete&id=' . $reporte['id_reporte'] . '" class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                ';
+            }
+        } else {
+            $output_report= '<tr><td colspan="4">No se encontraron considencias.</td></tr>';
+        }
+        
+        echo $output_report;
+    }
 }

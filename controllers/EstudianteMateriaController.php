@@ -110,4 +110,36 @@ class EstudianteMateriaController
             echo "ID no proporcionado.";
         }
     }
+    
+    /**BUSCADOR */
+    public function buscan($query_em)
+    {
+        // Llamamos al método del modelo que realiza la búsqueda
+        $result = $this->estudianteMateria->search_estudianteMateria($query_em);
+        $asignaciones = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        // Generamos el HTML para mostrar los resultados
+        $output_em = '';
+        if (count($asignaciones) > 0) {
+            foreach ($asignaciones as $asignacion) {
+                $output_em .= '
+                    <tr>
+                        <td>' . $asignacion['id_estudiante_materia'] . '</td>
+                        <td>' . $asignacion['nombre_estudiante'] . '</td>
+                        <td>' . $asignacion['apellido_estudiante'] . '</td>
+                        <td>' . $asignacion['nombre_materia'] . '</td>
+
+                        <td>
+                            <a href="../routers/estudianteMateriaRouter.php?action=edit&id=' . $asignacion['id_estudiante_materia'] . '" class="btn btn-warning btn-sm mb-1">Editar</a>
+                            <a href="../routers/estudianteMateriaRouter.php?action=confirmDelete&id=' . $asignacion['id_estudiante_materia'] . '" class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                ';
+            }
+        } else {
+            $output_em= '<tr><td colspan="4">No se encontraron considencias.</td></tr>';
+        }
+        
+        echo $output_em;
+    }
 }

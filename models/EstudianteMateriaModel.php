@@ -149,4 +149,24 @@ class EstudianteMateria
         $result->execute();
         return $result->fetchAll(PDO::FETCH_ASSOC); // Cambiado para mantener la consistencia
     }
+
+
+    public function search_estudianteMateria($query_em)
+    {
+        $query_em = "%" . $query_em . "%";
+        $sql= "SELECT em.id_estudiante_materia, 
+                e.nombre AS nombre_estudiante, 
+                e.apellido AS apellido_estudiante, 
+                mc.nombre AS nombre_materia
+            FROM estudiante_materia em
+            JOIN estudiantes e ON em.id_estudiante = e.id_estudiante
+            JOIN materias_cursos mc ON em.id_materia_curso = mc.id_materia_curso
+            WHERE e.nombre LIKE :query_em OR e.apellido LIKE :query_em OR mc.nombre LIKE :query_em";
+
+        $result = $this->conn->prepare($sql);
+        $result->bindParam(':query_em', $query_em);
+        $result->execute();
+        return $result;
+    }
+
 }
