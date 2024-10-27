@@ -28,47 +28,64 @@ if ($_SESSION['roles'] != 'Admin') {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-<br>
-
-    <!-- Mostramos el nombre del usuario y su rol -->
+<br><br>
+    <!-- Bienvenida y botón de salir -->
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 text-right">
                 <p>Bienvenido, <strong><?= htmlspecialchars($_SESSION['usuarios']); ?></strong> (Rol: <?= htmlspecialchars($_SESSION['roles']); ?>)</p>
-                <!-- Botón de salir -->
-                <div class="ml-auto">
-                    <a href="../routers/usuariosRouter.php" class="btn btn-light mr-2">Ver Usuarios</a>
-                    <form action="../views/auth/exit.php" method="POST" class="d-inline">
-                        <button type="submit" class="btn btn-danger">Salir</button>
-                    </form>
-                </div>
             </div>
         </div>
     </div>
-    <br>
 
+    <!--ver todas las tablas -->
+    <div class="container-fluid">
+        <div class="row justify-content-end">
+            <div class="col-auto d-flex align-items-center">
+                <div class="form-group mb-0 mx-3">
+                    <!--Para ver todad las tbls-->  
+                    <select id="tableSelect_Rol" class="form-control form-control-lg" onchange="navigateToTable_Rol()"> <!--llamando a la funcion en js-->
+                        <option value="">Selecciona una tabla...</option>
+                        <option value="../routers/rolesRouter.php">Roles</option>
+                        <option value="../routers/usuariosRouter.php">Usuarios</option>
+                        <option value="../routers/estudiantesRouter.php">Estudiantes</option>
+                        <option value="../routers/estudianteMateriaRouter.php">Estudiante Materia</option>
+                        <option value="../routers/materiasCursosRouter.php">Materias Cursos</option>
+                        <option value="../routers/reporteRouter.php">Reportes</option>
+                    </select>
+                </div>
+                <form action="../views/auth/exit.php" method="POST" class="d-inline mb-0">
+                    <button type="submit" class="btn btn-danger">Salir</button>
+                </form>
+            </div>
+        </div>
+    </div><br><br>
+
+<!--Card-->
     <div class="container-fluid">
         <div class="card m-auto mt-5 p-4">
             <h2>Lista de Roles</h2><br>
-
+            
             <!--Para la busqueda--->
-            <div class="container-sm">
+            <div class="container-lg">
                 <form action="" method="get">
-                    <!-- Campo de búsqueda -->
-                    <div class="input-group mb-3">
+                    <div class="d-flex justify-content-center mb-3 col-12">
+                        <a href="../routers/rolesRouter.php?action=exportPDF" class="btn btn-danger btn-sm mx-4">Exportar a PDF</>    
+                        <a href="../routers/rolesRouter.php?action=exportExcel" class="btn btn-warning btn-sm mx-4">Exportar a Excel</a>
+                        <a href="../routers/rolesRouter.php?action=exportCSV" class="btn btn-info btn-sm mx-4">Exportar a CSV</a>
+                    </div>
+                    <br>
+                    
+                    <!-- Para la búsqueda -->
+                    <div class="input-group mb-2 ">
+
                         <div class="col-12 col-md-6 col-lg-3">
-                            <a href="../routers/rolesRouter.php?action=create" class="btn btn-success btn-block w-100 mb-3">Crear Rol</a>
-                        </div>
-                        <div class="d-flex justify-content-end mb-3">
-                            <a href="../routers/rolesRouter.php?action=exportPDF" class="btn btn-danger btn-sm mx-4">Exportar a PDF</>    
-                            <a href="../routers/rolesRouter.php?action=exportExcel" class="btn btn-warning btn-sm mx-4">Exportar a Excel</a>
-                            <a href="../routers/rolesRouter.php?action=exportCSV" class="btn btn-info btn-sm mx-4">Exportar a CSV</a>
+                        <a href="../routers/rolesRouter.php?action=create" class="btn btn-success btn-block w-100 mb-3">Crear Rol</a>
                         </div>
                         <input type="text" id="buscarRol" class="form-control mx-2" placeholder="Buscar rol." aria-label="Recipient's username" aria-describedby="button-addon2" >
                     </div>
                 </form>
             </div>
-
             
             <div class="row mt-3">
                 <table class="table table-striped table-bordered">

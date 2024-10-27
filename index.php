@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($_SESSION['roles'] == 'Admin') {
                 header('Location: routers/usuariosRouter.php');
             } elseif ($_SESSION['roles'] == 'Profesor') {
-                header('Location: routers/estudianteMateriaRouter.php');
+                header('Location: routers/reporteRouter.php');
             } else {
                 header('Location: views/auth/accessDenied.php');
             }

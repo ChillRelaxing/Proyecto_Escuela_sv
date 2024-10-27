@@ -26,20 +26,49 @@ if ($_SESSION['roles'] != 'Admin' && $_SESSION['roles'] != 'Profesor') {
     <link rel="stylesheet" href="../views/css/reporteResponsive.css"> <!-- Estilos Responsivos -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
+<<<<<<< HEAD
 
 <body class="bg-light"><br>
 
     <!-- Cabecera y botón de salida -->
+=======
+<body class="bg-light">
+    <br><br>
+    <!-- Bienvenida y botón de salir -->
+>>>>>>> fd7b597ca599671d183b20720804e22d11b1c7ea
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 text-right">
                 <p>Bienvenido, <strong><?= htmlspecialchars($_SESSION['usuarios']); ?></strong> (Rol: <?= htmlspecialchars($_SESSION['roles']); ?>)</p>
+<<<<<<< HEAD
                 <div class="ml-auto">
                     <a href="../routers/estudianteMateriaRouter.php" class="btn btn-secondary mr-2">Estudiante-Materia</a>
                     <form action="../views/auth/exit.php" method="POST" class="d-inline">
                         <button type="submit" class="btn btn-danger">Salir</button>
                     </form>
+=======
+            </div>
+        </div>
+    </div>
+
+    <!-- SelectList para tablas -->
+    <div class="container-fluid">
+        <div class="row justify-content-end">
+            <div class="col-auto d-flex align-items-center">
+                <div class="form-group mb-0 mx-3">
+                    <select id="tableSelect_Rp" class="form-control form-control-lg" onchange="navigateToTable_Rp()">
+                        <option value="">Selecciona una tabla...</option>
+                        <option value="../routers/rolesRouter.php">Roles</option>
+                        <option value="../routers/usuariosRouter.php">Usuarios</option>
+                        <option value="../routers/estudiantesRouter.php">Estudiantes</option>
+                        <option value="../routers/estudianteMateriaRouter.php">Estudiante Materia</option>
+                        <option value="../routers/materiasCursosRouter.php">Materias Cursos</option>
+                    </select>
+>>>>>>> fd7b597ca599671d183b20720804e22d11b1c7ea
                 </div>
+                <form action="../views/auth/exit.php" method="POST" class="d-inline mb-0">
+                    <button type="submit" class="btn btn-danger">Salir</button>
+                </form>
             </div>
         </div>
     </div>

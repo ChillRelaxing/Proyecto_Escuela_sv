@@ -15,3 +15,11 @@ $(document).ready(function() {
         });
     });
 });
+
+// Función para redirigir al usuario según la opción seleccionada en el SelectList
+function navigateToTable() {
+    var tableUrl = document.getElementById("tableSelect").value;
+    if (tableUrl) {
+        window.location.href = tableUrl;
+    }
+}
