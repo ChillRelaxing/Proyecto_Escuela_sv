@@ -35,9 +35,14 @@ class EstudiantesController
             $this->estudiante->telefono = $_POST['telefono'];
             $this->estudiante->carnet = $_POST['carnet'];
             $this->estudiante->modalidad = $_POST['modalidad'];
-            
-            // Guardar y redirigir
-            if ($this->estudiante->create()) {
+
+            // Validar si el carnet ya existe
+            if ($this->estudiante->carnetExists($this->estudiante->carnet)) {
+                echo '<div style="background-color: #ffcccb; color: #c70000; padding: 10px; border: 1px solid #c70000; border-radius: 5px; margin: 20px 0;">
+        El carnet ya existe. Por favor, ingrese uno diferente.
+      </div>';
+            } elseif ($this->estudiante->create()) {
+                // Guardar y redirigir si no hay error
                 header("Location: ../routers/estudiantesRouter.php");
                 exit();
             } else {
@@ -47,6 +52,7 @@ class EstudiantesController
 
         include(dirname(__FILE__) . '/../views/Estudiantes/createEstudiantes.php');
     }
+
 
     public function edit($id)
     {
@@ -60,7 +66,7 @@ class EstudiantesController
             $this->estudiante->telefono = $_POST['telefono'];
             $this->estudiante->carnet = $_POST['carnet'];
             $this->estudiante->modalidad = $_POST['modalidad'];
-            
+
             if ($this->estudiante->update()) {
                 header("Location: ../routers/estudiantesRouter.php");
                 exit();
@@ -79,7 +85,7 @@ class EstudiantesController
 
         include(dirname(__FILE__) . '/../views/Estudiantes/deleteEstudiantes.php'); // Incluir la vista de confirmación
     }
-    
+
     public function delete($id)
     {
         $this->estudiante->id_estudiante = $id;
@@ -119,12 +125,9 @@ class EstudiantesController
                 ';
             }
         } else {
-            $output_est= '<tr><td colspan="4">No se encontraron considencias.</td></tr>';
+            $output_est = '<tr><td colspan="4">No se encontraron considencias.</td></tr>';
         }
-        
+
         echo $output_est;
     }
-    
 }
-
-?>

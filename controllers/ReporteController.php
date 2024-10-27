@@ -1,6 +1,7 @@
 <?php
 require_once(dirname(__FILE__) . '/../config/conf.php');
 require_once(dirname(__FILE__) . '/../models/ReporteModel.php');
+require_once(dirname(__FILE__) . '/../fpdf/fpdf.php');
 
 class ReporteController
 {
@@ -23,6 +24,11 @@ class ReporteController
     {
         $result = $this->reporte->get_reportes();
         $reportes = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        // Obtener los datos de las tablas relacionadas para el formulario
+        $estudiantes = $this->reporte->get_estudiantes();  // Obtener la lista de estudiantes
+        $usuarios = $this->reporte->get_usuarios();        // Obtener la lista de usuarios
+        $materias = $this->reporte->get_materias();        // Obtener la lista de materias/cursos
 
         // Llamamos la vista que muestra la lista de reportes
         include(dirname(__FILE__) . '/../views/reporte/indexReporte.php');
@@ -130,7 +136,7 @@ class ReporteController
         }
     }
 
-        
+
     /**BUSCADOR */
     public function buscando($query_reporte)
     {
@@ -159,9 +165,112 @@ class ReporteController
                 ';
             }
         } else {
-            $output_report= '<tr><td colspan="4">No se encontraron considencias.</td></tr>';
+            $output_report = '<tr><td colspan="4">No se encontraron considencias.</td></tr>';
         }
-        
+
         echo $output_report;
     }
+
+    // Función para exportar reportes a CSV
+    public function exportToCSV()
+    {
+        $id_estudiante = isset($_GET['id_estudiante']) ? $_GET['id_estudiante'] : null;
+        $id_materia_curso = isset($_GET['id_materia_curso']) ? $_GET['id_materia_curso'] : null;
+        $fecha_inicio = isset($_GET['fecha_inicio']) ? $_GET['fecha_inicio'] : null;
+        $fecha_fin = isset($_GET['fecha_fin']) ? $_GET['fecha_fin'] : null;
+
+        $reportes = $this->reporte->get_reportes_filtrados($id_estudiante, $id_materia_curso, $fecha_inicio, $fecha_fin);
+
+        $filename = "reportes_" . date('Y-m-d') . ".csv";
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=' . $filename);
+
+        // Limpiar salida
+        ob_clean();
+
+        echo "ID,Descripción,Fecha,Estudiante,Profesor,Materia\n";
+        foreach ($reportes as $reporte) {
+            echo "{$reporte['id_reporte']},{$reporte['descripcion']},{$reporte['fecha_reporte']},{$reporte['nombre_estudiante']},{$reporte['nombre_usuario']},{$reporte['nombre_materia']}\n";
+        }
+
+        exit();
+    }
+
+    // Función para exportar reportes a Excel
+    public function exportToExcel()
+    {
+        $id_estudiante = isset($_GET['id_estudiante']) ? $_GET['id_estudiante'] : null;
+        $id_materia_curso = isset($_GET['id_materia_curso']) ? $_GET['id_materia_curso'] : null;
+        $fecha_inicio = isset($_GET['fecha_inicio']) ? $_GET['fecha_inicio'] : null;
+        $fecha_fin = isset($_GET['fecha_fin']) ? $_GET['fecha_fin'] : null;
+
+        $reportes = $this->reporte->get_reportes_filtrados($id_estudiante, $id_materia_curso, $fecha_inicio, $fecha_fin);
+
+        $filename = "reportes_" . date('Y-m-d') . ".xls";
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment; filename=' . $filename);
+
+        // Limpiar salida
+        ob_clean();
+
+        // Agregar BOM para UTF-8
+        echo "\xEF\xBB\xBF"; // Esto es el BOM
+
+        echo "<table border='1'>";
+        echo "<tr><th>ID</th><th>Descripción</th><th>Fecha</th><th>Estudiante</th><th>Profesor</th><th>Materia</th></tr>";
+        foreach ($reportes as $reporte) {
+            echo "<tr>";
+            echo "<td>{$reporte['id_reporte']}</td>";
+            echo "<td>{$reporte['descripcion']}</td>";
+            echo "<td>{$reporte['fecha_reporte']}</td>";
+            echo "<td>{$reporte['nombre_estudiante']}</td>";
+            echo "<td>{$reporte['nombre_usuario']}</td>";
+            echo "<td>{$reporte['nombre_materia']}</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+        exit();
+    }
+
+    public function exportToPDF()
+    {
+        $id_estudiante = isset($_GET['id_estudiante']) ? $_GET['id_estudiante'] : null;
+        $id_materia_curso = isset($_GET['id_materia_curso']) ? $_GET['id_materia_curso'] : null;
+        $fecha_inicio = isset($_GET['fecha_inicio']) ? $_GET['fecha_inicio'] : null;
+        $fecha_fin = isset($_GET['fecha_fin']) ? $_GET['fecha_fin'] : null;
+    
+        $reportes = $this->reporte->get_reportes_filtrados($id_estudiante, $id_materia_curso, $fecha_inicio, $fecha_fin);
+    
+        $pdf = new FPDF('P', 'mm', 'A4');
+        $pdf->SetMargins(10, 10, 10);
+        $pdf->AddPage();
+        $pdf->SetFont('Arial', 'B', 16);
+        $pdf->Cell(0, 10, 'Lista de Reportes', 0, 1, 'C');
+    
+        // Cambié el tamaño de fuente del encabezado a 8
+        $pdf->SetFont('Arial', 'B', 8);
+        $pdf->Cell(8, 10, 'ID', 1);
+        $pdf->Cell(75, 10, 'Descripcion', 1);
+        $pdf->Cell(25, 10, 'Fecha', 1);
+        $pdf->Cell(30, 10, 'Estudiante', 1);
+        $pdf->Cell(30, 10, 'Profesor', 1);
+        $pdf->Cell(25, 10, 'Materia', 1);
+        $pdf->Ln();
+    
+        $pdf->SetFont('Arial', '', 8); // Tamaño de fuente para los datos
+        foreach ($reportes as $reporte) {
+            $pdf->Cell(8, 10, utf8_decode($reporte['id_reporte']), 1);
+    
+            // Usar MultiCell para la descripción
+            $pdf->Cell(75, 10, utf8_decode($reporte['descripcion']), 1, 0, 'L', false);
+            $pdf->Cell(25, 10, utf8_decode($reporte['fecha_reporte']), 1);
+            $pdf->Cell(30, 10, utf8_decode($reporte['nombre_estudiante']), 1);
+            $pdf->Cell(30, 10, utf8_decode($reporte['nombre_usuario']), 1);
+            $pdf->Cell(25, 10, utf8_decode($reporte['nombre_materia']), 1);
+            $pdf->Ln();
+        }
+    
+        $pdf->Output();
+    }
+    
 }

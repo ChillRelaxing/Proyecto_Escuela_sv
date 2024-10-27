@@ -5,12 +5,6 @@ USE escuela_sv;
 -- Leo503
 -- Villa503
 
--- Haseo de contraseña
-UPDATE usuarios
-SET password = ''
-WHERE id_usuario = 1;
- 
- 
 -- Crear tabla de roles
 CREATE TABLE roles (
     id_rol INT AUTO_INCREMENT PRIMARY KEY,

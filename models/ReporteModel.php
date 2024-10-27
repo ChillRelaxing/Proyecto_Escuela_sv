@@ -179,4 +179,44 @@ class Reporte
         $result->execute();
         return $result;
     }
+
+    public function get_reportes_filtrados($id_estudiante = null, $id_materia_curso = null, $fecha_inicio = null, $fecha_fin = null)
+    {
+        $query = "SELECT r.id_reporte, e.nombre AS nombre_estudiante, m.nombre AS nombre_materia, 
+                         u.nombre AS nombre_usuario, r.fecha_reporte, r.descripcion
+                  FROM reportes r
+                  JOIN estudiantes e ON r.id_estudiante = e.id_estudiante
+                  JOIN materias_cursos m ON r.id_materia_curso = m.id_materia_curso
+                  JOIN usuarios u ON r.id_usuario = u.id_usuario
+                  WHERE 1=1";
+
+        // Condiciones dinámicas de acuerdo con los filtros
+        if (!empty($id_estudiante)) {
+            $query .= " AND r.id_estudiante = :id_estudiante";
+        }
+        if (!empty($id_materia_curso)) {
+            $query .= " AND r.id_materia_curso = :id_materia_curso";
+        }
+        if (!empty($fecha_inicio) && !empty($fecha_fin)) {
+            $query .= " AND r.fecha_reporte BETWEEN :fecha_inicio AND :fecha_fin";
+        }
+
+        $stmt = $this->conn->prepare($query);
+
+        // Enlaza parámetros
+        if (!empty($id_estudiante)) {
+            $stmt->bindParam(':id_estudiante', $id_estudiante);
+        }
+        if (!empty($id_materia_curso)) {
+            $stmt->bindParam(':id_materia_curso', $id_materia_curso);
+        }
+        if (!empty($fecha_inicio) && !empty($fecha_fin)) {
+            $stmt->bindParam(':fecha_inicio', $fecha_inicio);
+            $stmt->bindParam(':fecha_fin', $fecha_fin);
+        }
+
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
 }
