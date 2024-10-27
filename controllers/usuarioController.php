@@ -170,7 +170,7 @@ class UsuarioController
 
         // Escribir los datos
         foreach ($usuarios as $usuario) {
-            echo "{$usuario['id_usuario']},{$usuario['nombre']},{$usuario['apellido']},{$usuario['correo']},{$usuario['id_rol']}\n";
+            echo "{$usuario['id_usuario']},{$usuario['nombre']},{$usuario['apellido']},{$usuario['correo']},{$usuario['nombre_rol']}\n";
         }
 
         exit();
@@ -201,7 +201,7 @@ class UsuarioController
             echo "<td>{$usuario['nombre']}</td>";
             echo "<td>{$usuario['apellido']}</td>";
             echo "<td>{$usuario['correo']}</td>";
-            echo "<td>{$usuario['id_rol']}</td>";
+            echo "<td>{$usuario['nombre_rol']}</td>";
             echo "</tr>";
         }
 

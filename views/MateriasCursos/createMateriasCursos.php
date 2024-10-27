@@ -9,7 +9,7 @@ if (!isset($_SESSION['usuarios']) || empty($_SESSION['usuarios'])) {
 }
 
 // Verificamos el rol del usuario
-if ($_SESSION['roles'] != 'Admin' && $_SESSION['roles'] != 'Profesor') {
+if ($_SESSION['roles'] != 'Admin' ) {
     echo "Acceso denegado";  // Depura antes de la redirección
     header('Location: ../views/auth/accessDenied.php');
     exit;

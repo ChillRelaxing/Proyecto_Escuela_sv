@@ -9,7 +9,7 @@ if (!isset($_SESSION['usuarios']) || empty($_SESSION['usuarios'])) {
 }
 
 // Verificamos el rol del usuario
-if ($_SESSION['roles'] != 'Admin' && $_SESSION['roles'] != 'Profesor') {
+if ($_SESSION['roles'] != 'Admin') {
     echo "Acceso denegado";  // Depura antes de la redirección
     header('Location: ../views/auth/accessDenied.php');
     exit;
@@ -30,23 +30,45 @@ if ($_SESSION['roles'] != 'Admin' && $_SESSION['roles'] != 'Profesor') {
 </head>
 
 <body class="bg-light">
-
+<br><br>
     <!-- Bienvenida y botón de salir -->
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12 text-right mt-3">
+            <div class="col-12 text-right">
                 <p>Bienvenido, <strong><?= htmlspecialchars($_SESSION['usuarios']); ?></strong> (Rol: <?= htmlspecialchars($_SESSION['roles']); ?>)</p>
-                <!-- Botón de salir -->
-                <div class="ml-auto">
-                    <a href="../routers/estudiantesRouter.php" class="btn btn-secondary mr-2">Estudiantes</a>
-                    <form action="../views/auth/exit.php" method="POST" class="d-inline">
-                        <button type="submit" class="btn btn-danger">Salir</button>
-                    </form>
-                </div>
             </div>
         </div>
     </div>
 
+    <!---->
+    <div class="container-fluid">
+        <div class="row justify-content-end">
+            <div class="col-auto d-flex align-items-center">
+                <div class="form-group mb-0 mx-3">
+                    <!--Para ver todad las tbls-->  
+                    <select id="tableSelect_mc" class="form-control form-control-lg" onchange="navigateToTable_mc()">
+                        <option value="">Selecciona una tabla...</option>
+                        <option value="../routers/rolesRouter.php">Roles</option>
+                        <option value="../routers/usuariosRouter.php">Usuarios</option>
+                        <option value="../routers/estudiantesRouter.php">Estudiantes</option>
+                        <option value="../routers/estudianteMateriaRouter.php">Estudiante Materia</option>
+                        <option value="../routers/materiasCursosRouter.php">Materias Cursos</option>
+                        <option value="../routers/reporteRouter.php">Reportes</option>
+
+                        <?php if ($_SESSION['roles'] === 'admin') : ?>
+                            <option value="../routers/reporteRouter.php">Reportes</option>
+                        <?php endif; ?>
+
+                    </select>
+                </div>
+                <form action="../views/auth/exit.php" method="POST" class="d-inline mb-0">
+                    <button type="submit" class="btn btn-danger">Salir</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<!--Card-->
     <div class="container mt-5 mb-5"> <!-- Añade márgenes superior e inferior -->
         <div class="card shadow-lg p-4"> <!-- Añade sombra y relleno -->
             <div class="card-header text-center">

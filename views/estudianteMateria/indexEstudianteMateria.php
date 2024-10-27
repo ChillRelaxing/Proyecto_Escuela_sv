@@ -29,23 +29,40 @@ if ($_SESSION['roles'] != 'Admin' && $_SESSION['roles'] != 'Profesor') {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body class="bg-light"><br>
-    
-    <!-- Mostramos el nombre del usuario y su rol -->
+    <br><br>
+    <!-- Bienvenida y botón de salir -->
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12 text-right ">
+            <div class="col-12 text-right">
                 <p>Bienvenido, <strong><?= htmlspecialchars($_SESSION['usuarios']); ?></strong> (Rol: <?= htmlspecialchars($_SESSION['roles']); ?>)</p>
-                <!-- Botón de salir -->
-                <div class="ml-auto">
-                    <a href="../routers/reporteRouter.php" class="btn btn-secondary mr-2">Hacer Reporte</a>
-                    <form action="../views/auth/exit.php" method="POST" class="d-inline">
-                        <button type="submit" class="btn btn-danger">Salir</button>
-                    </form>
-                </div>
             </div>
         </div>
     </div>
 
+    <!---->
+    <div class="container-fluid">
+        <div class="row justify-content-end">
+            <div class="col-auto d-flex align-items-center">
+                <div class="form-group mb-0 mx-3">
+                    <!--Para ver todad las tbls-->  
+                    <select id="tableSelect_em" class="form-control form-control-lg" onchange="navigateToTable_em()">
+                        <option value="">Selecciona una tabla...</option>
+                        <option value="../routers/rolesRouter.php">Roles</option>
+                        <option value="../routers/usuariosRouter.php">Usuarios</option>
+                        <option value="../routers/estudiantesRouter.php">Estudiantes</option>
+                        <option value="../routers/estudianteMateriaRouter.php">Estudiante Materia</option>
+                        <option value="../routers/materiasCursosRouter.php">Materias Cursos</option>
+                        <option value="../routers/reporteRouter.php">Reportes</option>
+                    </select>
+                </div>
+                <form action="../views/auth/exit.php" method="POST" class="d-inline mb-0">
+                    <button type="submit" class="btn btn-danger">Salir</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<!--Card-->
     <div class="container mt-5 mb-5"> <!-- Ajuste de márgenes superior e inferior -->
         <div class="card shadow-lg p-4"> <!-- Sombra para dar más contraste a la tarjeta -->
             <div class="card-header text-center">
