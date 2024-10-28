@@ -109,8 +109,8 @@ if ($_SESSION['roles'] != 'Admin' && $_SESSION['roles'] != 'Profesor') {
 
             <!-- Campo de Búsqueda -->
             <div class="container-sm mb-4">
-                <form action="" method="get" class="form-inline">
-                    <input type="text" id="buscarReporte" class="form-control mr-2" placeholder="Buscar reporte por estudiante, docente o materia..." style="width: 100%; max-width: 600px;">
+                <form action="" method="get" >
+                    <input type="text" id="buscarReporte" class="form-control mx-4" placeholder="Buscar reporte por estudiante, docente o materia." aria-label="Recipient's username" aria-describedby="button-addon2">
                 </form>
             </div>
 
