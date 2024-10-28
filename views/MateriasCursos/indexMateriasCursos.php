@@ -71,7 +71,18 @@ if ($_SESSION['roles'] != 'Admin') {
 <!--Card-->
     <div class="container-fluid">
         <div class="card m-auto mt-5 p-4">
-                <h2>Lista de Materias-Cursos</h2><br>
+            <h2>Lista de Materias-Cursos</h2><br>
+
+            <!-- Formulario de Filtro y Botones de Exportación -->
+            <div class="d-flex justify-content-between mb-3">
+                <div class="d-flex">
+                    <a href="../routers/materiasCursosRouter.php?action=exportPDF" class="btn btn-danger btn-sm mx-1">Exportar a PDF</>    
+                    <a href="../routers/materiasCursosRouter.php?action=exportExcel" class="btn btn-warning btn-sm mx-1">Exportar a Excel</a>
+                    <a href="../routers/materiasCursosRouter.php?action=exportCSV" class="btn btn-info btn-sm mx-1">Exportar a CSV</a>
+                </div>
+
+                <a href="../routers/materiasCursosRouter.php?action=create" class="btn btn-success btn-sm">Crear Materia-Curso</a>
+            </div>
 
             <!--Para la busqueda--->
             <div class="container-sm">
@@ -79,10 +90,6 @@ if ($_SESSION['roles'] != 'Admin') {
                     <!-- Campo de búsqueda -->
                     <div class="input-group mb-3">
                         <input type="text" id="buscarMateriasCrs" class="form-control mx-2" placeholder="Buscar Materia por nombre..." aria-label="Recipient's username" aria-describedby="button-addon2" >
-    
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <a href="../routers/materiasCursosRouter.php?action=create" class="btn btn-success btn-block w-100 mb-3">Crear Materia-Curso</a>
-                        </div>
                     </div>
                 </form>
             </div>
