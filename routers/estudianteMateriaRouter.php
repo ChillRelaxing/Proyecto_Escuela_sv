@@ -44,7 +44,18 @@ switch ($action) {
     case 'buscan':  //para manejar la búsqueda
         $controller->buscan($query_em);
         break;
-
+    
+    case 'exportCSV':
+        $controller->exportToCSV();
+        break;
+                    
+    case 'exportExcel':
+        $controller->exportToExcel();
+        break;
+                    
+    case 'exportPDF':
+        $controller->exportToPDF();
+        break;
     default:
         $controller->index();
         break;

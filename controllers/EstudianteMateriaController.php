@@ -1,6 +1,7 @@
 <?php
 require_once(dirname(__FILE__) . '/../config/conf.php');
 require_once(dirname(__FILE__) . '/../models/EstudianteMateriaModel.php');
+require_once(dirname(__FILE__) . '/../fpdf/fpdf.php');
 
 class EstudianteMateriaController
 {
@@ -142,4 +143,23 @@ class EstudianteMateriaController
         
         echo $output_em;
     }
+    
+    // Función para exportar estudiantemateria a CSV
+    public function exportToCSV()
+    {
+
+    }
+
+    // Función para exportar estudiantemateria a Excel
+    public function exportToExcel()
+    {
+
+    }
+
+    // Función para exportar estudiantemateria a PDF
+    public function exportToPDF()
+    {
+        
+    }
 }
+?>

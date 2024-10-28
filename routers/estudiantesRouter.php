@@ -52,6 +52,18 @@ switch ($action) {
         $controller->Estudiante_buscan($query_est);
         break;
 
+    case 'exportCSV':
+        $controller->exportToCSV();
+        break;
+                
+    case 'exportExcel':
+        $controller->exportToExcel();
+        break;
+                
+    case 'exportPDF':
+        $controller->exportToPDF();
+        break;
+
     default:
         $controller->index();
         break;

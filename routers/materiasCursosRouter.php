@@ -50,6 +50,18 @@ switch ($action) {
     case 'materiacurso_buscar':  //para manejar la búsqueda
         $controller->materiacurso_buscar($query_mt_curso);
         break;
+
+    case 'exportCSV':
+        $controller->exportToCSV();
+        break;
+                
+    case 'exportExcel':
+        $controller->exportToExcel();
+        break;
+                
+    case 'exportPDF':
+        $controller->exportToPDF();
+        break;
     
     default:
         $controller->index();

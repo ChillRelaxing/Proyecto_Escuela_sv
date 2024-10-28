@@ -1,6 +1,7 @@
 <?php
 require_once(dirname(__FILE__) . '/../config/conf.php');
 require_once(dirname(__FILE__) . '/../models/MateriasCursosModel.php');
+require_once(dirname(__FILE__) . '/../fpdf/fpdf.php');
 
 class MateriasCursosController
 {
@@ -131,6 +132,24 @@ class MateriasCursosController
         }
         
         echo $output_mt_curso;
+    }
+
+    // Función para exportar materiascursos a CSV
+    public function exportToCSV()
+    {
+
+    }
+
+    // Función para exportar materiascursos a Excel
+    public function exportToExcel()
+    {
+
+    }
+
+    // Función para exportar materiascursos a PDF
+    public function exportToPDF()
+    {
+        
     }
 }
 ?>
