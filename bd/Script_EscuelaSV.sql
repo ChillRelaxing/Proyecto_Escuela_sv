@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `escuela_sv` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `escuela_sv`;
 -- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
 -- Host: localhost    Database: escuela_sv
@@ -33,7 +31,7 @@ CREATE TABLE `estudiante_materia` (
   KEY `id_materia_curso` (`id_materia_curso`),
   CONSTRAINT `estudiante_materia_ibfk_1` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiantes` (`id_estudiante`) ON DELETE CASCADE,
   CONSTRAINT `estudiante_materia_ibfk_2` FOREIGN KEY (`id_materia_curso`) REFERENCES `materias_cursos` (`id_materia_curso`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +62,7 @@ CREATE TABLE `estudiantes` (
   PRIMARY KEY (`id_estudiante`),
   UNIQUE KEY `correo` (`correo`),
   UNIQUE KEY `carnet` (`carnet`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,7 +87,7 @@ CREATE TABLE `materias_cursos` (
   `nombre` varchar(100) NOT NULL,
   `descripcion` varchar(255) NOT NULL,
   PRIMARY KEY (`id_materia_curso`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +96,7 @@ CREATE TABLE `materias_cursos` (
 
 LOCK TABLES `materias_cursos` WRITE;
 /*!40000 ALTER TABLE `materias_cursos` DISABLE KEYS */;
-INSERT INTO `materias_cursos` VALUES (1,'Matemáticas','Curso de matemáticas básicas'),(2,'Historia','Curso de historia universal'),(3,'picachu','picachuyyy');
+INSERT INTO `materias_cursos` VALUES (1,'Matemáticas','Curso de matemáticas básicas'),(2,'Historia','Curso de historia universal');
 /*!40000 ALTER TABLE `materias_cursos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,7 +121,7 @@ CREATE TABLE `reportes` (
   CONSTRAINT `reportes_ibfk_1` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiantes` (`id_estudiante`) ON DELETE CASCADE,
   CONSTRAINT `reportes_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE,
   CONSTRAINT `reportes_ibfk_3` FOREIGN KEY (`id_materia_curso`) REFERENCES `materias_cursos` (`id_materia_curso`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,7 +146,7 @@ CREATE TABLE `roles` (
   `nombre` varchar(50) NOT NULL,
   PRIMARY KEY (`id_rol`),
   UNIQUE KEY `nombre` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,7 +177,7 @@ CREATE TABLE `usuarios` (
   UNIQUE KEY `correo` (`correo`),
   KEY `id_rol` (`id_rol`),
   CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id_rol`) ON DELETE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -188,7 +186,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'Juan','Pérez','juan.perez@escuela.com','$2y$10$Qa0TcBlPcRgzeDvIBSFmeO1SHLSPVs/969gIYytbTNQCS3gq3tRSu',1),(2,'Leo','Salmeron','LeoSal@escuela.com','$2y$10$h6J5vmTQX99LivwRhY8vhO0S4FIRGb/xfumpOaz7A1gHvT0GiRvmy',2),(11,'Rene','Colocado','Rene@gmail.com','$2y$10$WNUBG/pZHrBD26aHQCVGZOfQwYx.CgyWoHPUksUh522J0iGNAS93y',1);
+INSERT INTO `usuarios` VALUES (1,'Juan','Pérez','juan.perez@escuela.com','$2y$10$KUVrASsKKRnpSA98mCyLeuZ5N95OW0ccTfdxV8A.8LTGD40By.es.',1),(2,'Ana','Gómez','ana.gomez@escuela.com','Villa503',2);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -201,4 +199,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-17 19:20:07
+-- Dump completed on 2024-10-27 22:09:04

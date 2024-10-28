@@ -2,9 +2,12 @@
 CREATE DATABASE IF NOT EXISTS escuela_sv;
 USE escuela_sv;
  
--- Leo503
--- Villa503
-
+ -- Ejecutar de ultimo
+ -- Haseo de contraseña para poder iniciar sesion
+UPDATE usuarios
+SET password = '$2y$10$KUVrASsKKRnpSA98mCyLeuZ5N95OW0ccTfdxV8A.8LTGD40By.es.'
+WHERE id_usuario = 1;
+ 
 -- Crear tabla de roles
 CREATE TABLE roles (
     id_rol INT AUTO_INCREMENT PRIMARY KEY,
@@ -107,6 +110,8 @@ VALUES (1, 1), -- Carlos López cursa Matemáticas
 INSERT INTO reportes (id_estudiante, id_usuario, id_materia_curso, fecha_reporte, descripcion)
 VALUES (1, 1, 1, '2024-09-15', 'Problemas de asistencia en matemáticas'),
        (2, 2, 2, '2024-09-16', 'Problemas con las tareas de historia');
+
+
 
 
 
