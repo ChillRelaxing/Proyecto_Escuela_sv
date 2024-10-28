@@ -109,17 +109,17 @@ class MateriasCursosController
     {
         // Llamamos al método del modelo que realiza la búsqueda
         $result = $this->materiacurso->search_materiacurso($query_mt_curso);
-        $materiacurso = $result->fetchAll(PDO::FETCH_ASSOC);
+        $materiacursos = $result->fetchAll(PDO::FETCH_ASSOC);
 
         // Generamos el HTML para mostrar los resultados
         $output_mt_curso= '';
-        if (count($materiacurso) > 0) {
-            foreach ($materiacurso as $materiacursos) {
+        if (count($materiacursos) > 0) {
+            foreach ($materiacursos as $materiacurso) {
                 $output_mt_curso .= '
                     <tr>
-                        <td>' . $materiacursos['id_materia_curso'] . '</td>
-                        <td>' . $materiacursos['nombre'] . '</td>
-                        <td>' . $materiacursos['descripcion'] . '</td>
+                        <td>' . $materiacurso['id_materia_curso'] . '</td>
+                        <td>' . $materiacurso['nombre'] . '</td>
+                        <td>' . $materiacurso['descripcion'] . '</td>
                         <td>
                             <a href="../routers/materiasCursosRouter.php?action=edit&id=' . $materiacursos['id_materia_curso'] . '" class="btn btn-warning btn-sm mb-1">Editar</a>
                             <a href="../routers/materiasCursosRouter.php?action=confirmDelete&id=' . $materiacursos['id_materia_curso'] . '" class="btn btn-danger btn-sm">Eliminar</a>
@@ -137,19 +137,96 @@ class MateriasCursosController
     // Función para exportar materiascursos a CSV
     public function exportToCSV()
     {
+        // Recuperar los cursos
+        $result = $this->materiacurso->get_MateriasCursos();
+        $cursos = $result->fetchAll(PDO::FETCH_ASSOC);
 
+        // Nombre del archivo CSV
+        $filename = "cursos_" . date('Y-m-d') . ".csv";
+
+        // Cabeceras para forzar descarga
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=' . $filename);
+
+        // Crear una tabla en formato CSV
+        echo "ID,Nombre,Descripcion\n";
+
+        // Escribir los datos
+        foreach ($cursos as $materiacurso) {
+            echo "{$materiacurso['id_materia_curso']},{$materiacurso['nombre']},{$materiacurso['descripcion']}\n";
+        }
+
+        exit();
     }
 
     // Función para exportar materiascursos a Excel
     public function exportToExcel()
     {
+        // Recuperar los cursos
+        $result = $this->materiacurso->get_MateriasCursos();
+        $cursos = $result->fetchAll(PDO::FETCH_ASSOC);
 
+        // Nombre del archivo Excel
+        $filename = "cursos_" . date('Y-m-d') . ".xls";
+
+        // Cabeceras para forzar descarga
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment; filename=' . $filename);
+
+        // Crear una tabla HTML para Excel
+        echo "<table border='1'>";
+        echo "<tr><th>ID</th><th>Nombre</th><th>Descripcion</th></tr>";
+
+        // Escribir los datos
+        foreach ($cursos as $materiacurso) {
+            echo "<tr>";
+            echo "<td>{$materiacurso['id_materia_curso']}</td>";
+            echo "<td>{$materiacurso['nombre']}</td>";
+            echo "<td>{$materiacurso['descripcion']}</td>";
+            echo "</tr>";
+        }
+
+        echo "</table>";
+        exit();
     }
 
     // Función para exportar materiascursos a PDF
     public function exportToPDF()
     {
-        
+        // Recuperar los cursos
+        $result = $this->materiacurso->get_MateriasCursos();
+        $cursos = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        // Crear una instancia de FPDF
+        $pdf = new FPDF();
+        $pdf->AddPage();
+
+        // Establecer fuente
+        $pdf->SetFont('Arial', 'B', 16);
+        $pdf->Cell(0, 10, 'Lista de Cursos', 0, 1, 'C'); // Título centrado
+
+        // Establecer encabezados de tabla
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(30, 10, 'ID', 1);
+        $pdf->Cell(50, 10, 'Nombre', 1);
+        $pdf->Cell(80, 10, 'Descripcion', 1);
+        $pdf->Ln();
+
+        // Establecer fuente para los datos
+        $pdf->SetFont('Arial', '', 12);
+
+        // Agregar los datos a la tabla
+        foreach ($cursos as $materiacurso) {
+            $pdf->Cell(30, 10, $materiacurso['id_materia_curso'], 1);
+            $pdf->Cell(50, 10, $materiacurso['nombre'], 1);
+            $pdf->Cell(80, 10, $materiacurso['descripcion'], 1);
+            $pdf->Ln();
+        }
+
+        // Descargar el PDF
+        $pdfFileName = "cursos_" . date('Y-m-d') . ".pdf";
+        $pdf->Output('D', $pdfFileName);
+        exit();
     }
 }
 ?>

@@ -147,19 +147,96 @@ class EstudianteMateriaController
     // Función para exportar estudiantemateria a CSV
     public function exportToCSV()
     {
+        // Recuperar las asignaciones (ya es un array)
+        $asignaciones = $this->estudianteMateria->get_estudiante_materia();
 
+        // Nombre del archivo CSV
+        $filename = "asignaciones_" . date('Y-m-d') . ".csv";
+
+        // Cabeceras para forzar descarga
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=' . $filename);
+
+        // Crear una tabla en formato CSV
+        echo "ID,Nombre Estudiante,Apellido Estudiante,Nombre Materia\n";
+
+        // Escribir los datos
+        foreach ($asignaciones as $estudianteMateria) {
+            echo "{$estudianteMateria['id_estudiante_materia']},{$estudianteMateria['nombre_estudiante']},{$estudianteMateria['apellido_estudiante']},{$estudianteMateria['nombre_materia']}\n";
+        }
+
+        exit();
     }
 
     // Función para exportar estudiantemateria a Excel
     public function exportToExcel()
     {
+        // Recuperar las asignaciones (ya es un array)
+        $asignaciones = $this->estudianteMateria->get_estudiante_materia();
 
+        // Nombre del archivo Excel
+        $filename = "asignaciones_" . date('Y-m-d') . ".xls";
+
+        // Cabeceras para forzar descarga
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment; filename=' . $filename);
+
+        // Crear una tabla HTML para Excel
+        echo "<table border='1'>";
+        echo "<tr><th>ID</th><th>Nombre Estudiante</th><th>Apellido Estudiante</th><th>Nombre Materia</th></tr>";
+
+        // Escribir los datos
+        foreach ($asignaciones as $estudianteMateria) {
+            echo "<tr>";
+            echo "<td>{$estudianteMateria['id_estudiante_materia']}</td>";
+            echo "<td>{$estudianteMateria['nombre_estudiante']}</td>";
+            echo "<td>{$estudianteMateria['apellido_estudiante']}</td>";
+            echo "<td>{$estudianteMateria['nombre_materia']}</td>";
+            echo "</tr>";
+        }
+
+        echo "</table>";
+        exit();
     }
 
     // Función para exportar estudiantemateria a PDF
     public function exportToPDF()
     {
-        
+        // Recuperar las asignaciones (ya es un array)
+        $asignaciones = $this->estudianteMateria->get_estudiante_materia();
+
+        // Crear una instancia de FPDF
+        $pdf = new FPDF();
+        $pdf->AddPage();
+
+        // Establecer fuente
+        $pdf->SetFont('Arial', 'B', 16);
+        $pdf->Cell(0, 10, 'Lista de Asignaciones', 0, 1, 'C'); // Título centrado
+
+        // Establecer encabezados de tabla
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(30, 10, 'ID', 1);
+        $pdf->Cell(50, 10, 'Nombre Estudiante', 1);
+        $pdf->Cell(50, 10, 'Apellido Estudiante', 1);
+        $pdf->Cell(60, 10, 'Nombre Materia', 1);
+        $pdf->Ln();
+
+        // Establecer fuente para los datos
+        $pdf->SetFont('Arial', '', 12);
+
+        // Agregar los datos a la tabla
+        foreach ($asignaciones as $estudianteMateria) {
+            $pdf->Cell(30, 10, $estudianteMateria['id_estudiante_materia'], 1);
+            $pdf->Cell(50, 10, $estudianteMateria['nombre_estudiante'], 1);
+            $pdf->Cell(50, 10, $estudianteMateria['apellido_estudiante'], 1);
+            $pdf->Cell(60, 10, $estudianteMateria['nombre_materia'], 1);
+            $pdf->Ln();
+        }
+
+        // Descargar el PDF
+        $pdfFileName = "asignaciones_" . date('Y-m-d') . ".pdf";
+        $pdf->Output('D', $pdfFileName);
+        exit();
     }
 }
 ?>

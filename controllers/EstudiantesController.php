@@ -147,12 +147,11 @@ class EstudiantesController
         header('Content-Disposition: attachment; filename=' . $filename);
 
         // Crear una tabla en formato CSV
-        echo "ID,Nombre\n";
+        echo "ID,Nombre,Apellido,Correo,Telefono,Carnet,Modalidad\n";
 
         // Escribir los datos
         foreach ($estudiantes as $estudiante) {
-            echo "{$estudiante['id_estudiante']},{$estudiante['nombre']},{$estudiante['apellido']},{$estudiante['correo']},{$estudiante['telefono']},
-                  {$estudiante['carnet']},{$estudiante['modalidad']}\n";
+            echo "{$estudiante['id_estudiante']},{$estudiante['nombre']},{$estudiante   ['apellido']},{$estudiante['correo']},{$estudiante['telefono']},{$estudiante['carnet']},{$estudiante['modalidad']}\n";
         }
 
         exit();
@@ -174,7 +173,7 @@ class EstudiantesController
 
         // Crear una tabla HTML para Excel
         echo "<table border='1'>";
-        echo "<tr><th>ID</th><th>Nombre</th></tr>";
+        echo "<tr><th>ID</th><th>Nombre</th><th>Apellido</th><th>Correo</th><th>Telefono</  th><th>Carnet</th><th>Modalidad</th></tr>";
 
         // Escribir los datos
         foreach ($estudiantes as $estudiante) {
@@ -203,42 +202,35 @@ class EstudiantesController
         // Crear una instancia de FPDF
         $pdf = new FPDF();
         $pdf->AddPage();
-    
+
         // Establecer fuente
         $pdf->SetFont('Arial', 'B', 16);
-        $pdf->Cell(0, 10, 'Lista de Estudiantes', 0, 1, 'C'); // Título centrado
+        $pdf->Cell(0, 10, 'Lista de Estudiantes', 0, 1,     'C'); // Título centrado
 
-        // Calcular el ancho total de la tabla (20 + 40 = 60)
-        $totalWidth = 40;
-        $pageWidth = $pdf->GetPageWidth(); // Obtener el ancho de la página
-        $xOffset = ($pageWidth - $totalWidth) / 2; // Calcular el desplazamiento desde la izquierda para centrar
-
-        // Establecer encabezados de tabla y centrar
+        // Establecer encabezados de tabla
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->SetX($xOffset); // Desplazar X para centrar
-        $pdf->Cell(20, 10, 'ID Estudiante', 1);
-        $pdf->Cell(20, 10, 'Nombre Estudiante', 1);
-        $pdf->Cell(20, 10, 'Apellido Estudiante', 1);
-        $pdf->Cell(20, 10, 'Correo', 1);
-        $pdf->Cell(20, 10, 'Telefono', 1);
-        $pdf->Cell(20, 10, 'Carnet', 1);
-        $pdf->Cell(20, 10, 'Modalidad', 1);
+        $pdf->Cell(8, 10, 'ID', 1);
+        $pdf->Cell(22, 10, 'Nombre', 1);
+        $pdf->Cell(22, 10, 'Apellido', 1);
+        $pdf->Cell(60, 10, 'Correo', 1);
+        $pdf->Cell(25, 10, 'Telefono', 1);
+        $pdf->Cell(25, 10, 'Carnet', 1);
+        $pdf->Cell(25, 10, 'Modalidad', 1);
         $pdf->Ln();
 
         // Establecer fuente para los datos
         $pdf->SetFont('Arial', '', 12);
 
-        // Agregar los roles a la tabla y centrar
+        // Agregar los datos a la tabla
         foreach ($estudiantes as $estudiante) {
-            $pdf->SetX($xOffset); // Desplazar X para centrar cada fila
-            $pdf->Cell(20, 10, $estudiante['id_estudiante'], 1);
-            $pdf->Cell(20, 10, $estudiante['nombre'], 1);
-            $pdf->Cell(20, 10, $estudiante['apellido'], 1);
-            $pdf->Cell(20, 10, $estudiante['correo'], 1);
-            $pdf->Cell(20, 10, $estudiante['telefono'], 1);
-            $pdf->Cell(20, 10, $estudiante['carnet'], 1);
-            $pdf->Cell(20, 10, $estudiante['modalidad'], 1);
-            $pdf->Ln(); // Nueva línea
+            $pdf->Cell(8, 10, $estudiante['id_estudiante'], 1);
+            $pdf->Cell(22, 10, $estudiante['nombre'], 1);
+            $pdf->Cell(22, 10, $estudiante['apellido'], 1);
+            $pdf->Cell(60, 10, $estudiante['correo'], 1);
+            $pdf->Cell(25, 10, $estudiante['telefono'], 1);
+            $pdf->Cell(25, 10, $estudiante['carnet'], 1);
+            $pdf->Cell(25, 10, $estudiante['modalidad'], 1);
+            $pdf->Ln();
         }
 
         // Descargar el PDF
@@ -246,5 +238,6 @@ class EstudiantesController
         $pdf->Output('D', $pdfFileName);
         exit();
     }
+
 }
 ?>
