@@ -11,96 +11,87 @@ h2, h4 {
 
 .form-control {
     font-size: 1em;
-    
 }
 
-/* ESTILO PARA DISPOSITIVOS MOVILES (Horizontal) */
-@media (max-width: 667px) {
-    table th, table td {
-        font-size: 9px; /* Reducir el tamaño del texto */
+/* Estilos para dispositivos móviles */
+@media (max-width: 576px) {
+    .container {
+        padding: 10px;
     }
-
-    /* Truncar el texto en columnas con datos grandes */
-    td:nth-child(4), /* Correo */
-    td:nth-child(5) { /* Password */
-        white-space: nowrap; /* Evitar que el texto se ajuste en varias líneas */
-        overflow: hidden; /* Ocultar el texto que sobrepasa el ancho */
-        text-overflow: ellipsis; /* Mostrar puntos suspensivos (...) para texto largo */
-        max-width: 100px; /* Ajusta este valor para controlar el ancho máximo de la celda */
-    }
-    
-    h2 {
+    h2, h4 {
         font-size: 1.5em;
     }
-
     .btn {
-        width: 100%; /* Botones ocupan el 100% del ancho de la pantalla */
-        margin-bottom: 5px; /* Espacio entre botones */
+        width: 100%;
+    }
+    .form-control, .table {
+        font-size: 0.9em;
     }
 }
 
-/* ESTILO PARA TABLETS (Horizontal) */
-@media(min-width: 668px) and (max-width: 932px) {
-    table th, table td {
-        font-size: 12px; /* Reducir el tamaño del texto */
+/* Estilos para tablets */
+@media (min-width: 577px) and (max-width: 768px) {
+    .container {
+        padding: 15px;
     }
-
-    /* Columnas con contenido largo (Correo, Password, etc.) */
-    td:nth-child(4), /* Correo */
-    td:nth-child(5) { /* Password */
-        white-space: nowrap; /* Evitar que el texto se ajuste en varias líneas */
-        overflow: hidden; /* Ocultar el texto que sobrepasa el ancho */
-        text-overflow: ellipsis; /* Mostrar puntos suspensivos (...) para texto largo */
-        max-width: 100px; /* Ajusta este valor para controlar el ancho máximo de la celda */
-    }
-
-    h2 {
+    h2, h4 {
         font-size: 1.75em;
     }
-
     .btn {
-        font-size: 12px;
-        width: 80%; /* Botones ocupan el 100% del ancho de la pantalla*/
-        margin-bottom: 5px; /* Espacio entre botones */
+        width: 100%;
+    }
+    .form-control, .table {
+        font-size: 1em;
     }
 }
 
-/* ESTILO PARA PANTALLAS DE ESCRITORIO */
-@media (min-width: 933px) and (max-width: 1024px) {
-    table th, table td {
-        font-size: 11px; /* Reducir el tamaño del texto */
+/* Estilos para pantallas más grandes */
+@media (min-width: 769px) {
+    .container {
+        padding: 20px;
     }
-
-    /* Columnas con contenido largo (Password) */
-    td:nth-child(5) { /* Password */
-        white-space: nowrap; /* Evitar que el texto se ajuste en varias líneas */
-        overflow: hidden; /* Ocultar el texto que sobrepasa el ancho */
-        text-overflow: ellipsis; /* Mostra puntos suspensivos (...) para texto largo */
-        /*max-width: 100px; /*  valor para el ancho máximo de la celda */
-    }
-
-    h2 {
+    h2, h4 {
         font-size: 2em;
     }
-
-    .btn {
-        font-size: 12px;
-        width: 100%; 
-        margin-bottom: 5px; /* Espacio entre botones */
+    .card {
+        margin: auto;
+    }
+    .form-control, .table {
+        font-size: 1em;
+    }
+    table {
+        width: 100%;
     }
 }
 
-/* ESTILO PARA PANTALLAS DE ESCRITORIO */
-@media (min-width: 1025px) and (max-width: 1200px) {
-    table th, table td {
-        font-size: 11px; /* Reducir el tamaño del texto del contenido de tbl */
+/* Estilos para pantallas de escritorio grandes */
+@media (min-width: 992px) {
+    .container {
+        max-width: 1200px;
     }
-    h2 {
-        font-size: 2.5em;
+    h2, h4 {
+        font-size: 2.25em;
     }
     .btn {
-        font-size: 12px;
-        width: 100%; 
-        margin-bottom: 5px; /* Espacio entre botones */
+        width: auto;
+    }
+    .form-control, .table {
+        font-size: 1em;
+    }
+}
+
+/* Estilos para pantallas extra grandes */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1400px;
+    }
+    h2, h4 {
+        font-size: 2.5em;
+    }
+    .table {
+        font-size: 1.1em;
+    }
+    .form-control {
+        font-size: 1.1em;
     }
 }

@@ -1,11 +1,13 @@
 /* Estilos generales */
 body {
     font-family: Arial, sans-serif;
+    background-color: #dcdfe2;
 }
 
 h2, h4 {
-    color: #007bff; /* Color azul para títulos */
-}
+    background-color: rgb(245, 239, 239);
+    text-align: center;
+    color: #007bff; /* Color azul para títulos */}
 
 .form-control {
     font-size: 1em;

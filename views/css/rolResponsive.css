@@ -11,80 +11,87 @@ h2, h4 {
 
 .form-control {
     font-size: 1em;
-    
 }
 
 /* Estilos para dispositivos móviles */
-@media (max-width: 667px) {
-    table th, table td {
-        font-size: 11px; /* Reducir el tamaño del texto */
-    }
+@media (max-width: 576px) {
     .container {
         padding: 10px;
     }
-    h2 {
+    h2, h4 {
         font-size: 1.5em;
     }
     .btn {
-        font-size: 10px;
-        width: 40%; 
-        margin-bottom: 5px; /* Espacio entre botones */
+        width: 100%;
     }
-
+    .form-control, .table {
+        font-size: 0.9em;
+    }
 }
 
 /* Estilos para tablets */
-@media(min-width: 668px) and (max-width: 932px)  {
-    table th, table td {
-        font-size: 16px; /* Reducir el tamaño del texto */
-    }
+@media (min-width: 577px) and (max-width: 768px) {
     .container {
-        padding: 10px;
+        padding: 15px;
     }
-    h2 {
+    h2, h4 {
         font-size: 1.75em;
+    }
+    .btn {
+        width: 100%;
+    }
+    .form-control, .table {
+        font-size: 1em;
+    }
+}
+
+/* Estilos para pantallas más grandes */
+@media (min-width: 769px) {
+    .container {
+        padding: 20px;
+    }
+    h2, h4 {
+        font-size: 2em;
     }
     .card {
         margin: auto;
     }
-    .btn {
-        font-size: 13px;
-        width: 40%; 
-        margin-bottom: 5px; /* Espacio entre botones */
+    .form-control, .table {
+        font-size: 1em;
     }
-
+    table {
+        width: 100%;
+    }
 }
 
-/* Estilos para pantallas más grandes */
-@media (min-width: 933px) and (max-width: 1024px) {
-    table th, table td {
-        font-size: 20px; /* Reducir el tamaño del texto */
+/* Estilos para pantallas de escritorio grandes */
+@media (min-width: 992px) {
+    .container {
+        max-width: 1200px;
     }
-
-    h2 {
-        font-size: 2em;
+    h2, h4 {
+        font-size: 2.25em;
     }
     .btn {
-        font-size: 16px;
-        width: 40%; 
-        margin-bottom: 5px; /* Espacio entre botones */
+        width: auto;
     }
-
+    .form-control, .table {
+        font-size: 1em;
+    }
 }
 
 /* Estilos para pantallas extra grandes */
-@media (min-width: 1025px) and (max-width: 1200px) {
-    table th, table td {
-        font-size: 22px; /* Reducir el tamaño del texto */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1400px;
     }
-
-    h2 {
+    h2, h4 {
         font-size: 2.5em;
     }
-    .btn {
-        font-size: 16px;
-        width: 40%; 
-        margin-bottom: 5px; /* Espacio entre botones */
+    .table {
+        font-size: 1.1em;
     }
-
+    .form-control {
+        font-size: 1.1em;
+    }
 }

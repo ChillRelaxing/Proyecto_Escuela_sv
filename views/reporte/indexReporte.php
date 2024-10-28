@@ -27,8 +27,8 @@ if ($_SESSION['roles'] != 'Admin' && $_SESSION['roles'] != 'Profesor') {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
-<body class="bg-light"><br>
-
+<body>
+<br><br>
     <!-- Cabecera y botón de salida -->
     <div class="container-fluid">
         <div class="row">
@@ -38,7 +38,7 @@ if ($_SESSION['roles'] != 'Admin' && $_SESSION['roles'] != 'Profesor') {
         </div>
     </div>
 
-    <!-- SelectList para tablas -->
+    <!--ver todas las tablas -->
     <div class="container-fluid">
         <div class="row justify-content-end">
             <div class="col-auto d-flex align-items-center">
@@ -57,13 +57,11 @@ if ($_SESSION['roles'] != 'Admin' && $_SESSION['roles'] != 'Profesor') {
                 </form>
             </div>
         </div>
-    </div>
+    </div><br><br>
 
-    <div class="container mt-5 mb-5">
-        <div class="card shadow-lg p-4">
-            <div class="card-header text-center">
-                <h2>Lista de Reportes</h2>
-            </div><br>
+    <div class="container-fluid">
+        <div class="card m-auto mt-5 p-4">
+                <h2>Lista de Reportes</h2><br>
 
             <!-- Formulario de Filtro y Botones de Exportación -->
             <div class="d-flex justify-content-between mb-3">

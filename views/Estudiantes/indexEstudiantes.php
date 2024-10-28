@@ -27,8 +27,8 @@ if ($_SESSION['roles'] != 'Admin' && $_SESSION['roles'] != 'Profesor') {
     <!--URL Ajax-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
-<body class="bg-light">
-    <br><br>
+<body>
+<br><br>
     <!-- Bienvenida y botón de salir -->
     <div class="container-fluid">
         <div class="row">
@@ -59,14 +59,12 @@ if ($_SESSION['roles'] != 'Admin' && $_SESSION['roles'] != 'Profesor') {
                 </form>
             </div>
         </div>
-    </div>
+    </div><br><br>
     
 <!--Card-->
-    <div class="container mt-5 mb-5"> <!-- Añade márgenes superior e inferior -->
-        <div class="card shadow-lg p-4"> <!-- Añade sombra y relleno -->
-            <div class="card-header text-center">
-                <h2>Lista de Estudiantes</h2>
-            </div><br><br>
+    <div class="container-fluid">
+        <div class="card m-auto mt-5 p-4">
+            <h2>Lista de Estudiantes</h2><br>
 
             <!--Para la busqueda--->
             <div class="container-sm">

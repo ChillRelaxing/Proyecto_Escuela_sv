@@ -38,7 +38,7 @@ if ($_SESSION['roles'] != 'Admin') {
         </div>
     </div>
 
-    <!---->
+    <!--ver todas las tablas -->
     <div class="container-fluid">
         <div class="row justify-content-end">
             <div class="col-auto d-flex align-items-center">
@@ -64,7 +64,7 @@ if ($_SESSION['roles'] != 'Admin') {
 <!--Card-->
     <div class="container-fluid">
         <div class="card m-auto mt-5 p-4">
-            <h2 class="text-center">Lista de Usuarios</h2><br><br>
+            <h2 class="text-center">Lista de Usuarios</h2><br>
             
             <!--Para la busqueda--->
             <div class="container-lg">
