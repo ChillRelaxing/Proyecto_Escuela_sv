@@ -87,21 +87,17 @@ class MateriasCursosController
     }
 
     // Método para confirmar y eliminar una materia
-    public function delete()
+    public function delete($id)
     {
-        if ($_POST && isset($_POST['id_materia_curso'])) {
-            $this->materiacurso->id_materia_curso = $_POST['id_materia_curso'];
+            $this->materiacurso->id_materia_curso = $id;
 
             // Lógica de eliminación
             if ($this->materiacurso->delete()) {
-                header("Location: indexMateriasCursos.php");
+                header("Location: ../routers/materiasCursosRouter.php");
                 exit();
             } else {
                 echo "Error al eliminar la materia.";
             }
-        } else {
-            echo "ID de rol no proporcionado.";
-        }
     }
 
     /**BUSCADOR */

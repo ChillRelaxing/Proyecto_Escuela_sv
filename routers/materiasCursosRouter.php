@@ -31,13 +31,13 @@ switch ($action) {
         }
         break;
 
-        case 'confirmDelete':
-            if ($id) {
-                $controller->confirmDelete($id); // Mostrar la vista de confirmación
-            } else {
-                $controller->index();
-            }
-            break;
+    case 'confirmDelete':
+        if ($id) {
+            $controller->confirmDelete($id); // Mostrar la vista de confirmación
+        } else {
+            $controller->index();
+        }
+        break;
 
     case 'delete':
         if ($id) {
