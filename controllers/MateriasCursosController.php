@@ -102,7 +102,7 @@ class MateriasCursosController
 
     /**BUSCADOR */
     public function materiacurso_buscar($query_mt_curso)
-    {
+    { 
         // Llamamos al método del modelo que realiza la búsqueda
         $result = $this->materiacurso->search_materiacurso($query_mt_curso);
         $materiacursos = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -117,18 +117,19 @@ class MateriasCursosController
                         <td>' . $materiacurso['nombre'] . '</td>
                         <td>' . $materiacurso['descripcion'] . '</td>
                         <td>
-                            <a href="../routers/materiasCursosRouter.php?action=edit&id=' . $materiacursos['id_materia_curso'] . '" class="btn btn-warning btn-sm mb-1">Editar</a>
-                            <a href="../routers/materiasCursosRouter.php?action=confirmDelete&id=' . $materiacursos['id_materia_curso'] . '" class="btn btn-danger btn-sm">Eliminar</a>
+                            <a href="../routers/materiasCursosRouter.php?action=edit&id=' . $materiacurso['id_materia_curso'] . '" class="btn btn-warning btn-sm mb-1">Editar</a>
+                            <a href="../routers/materiasCursosRouter.php?action=confirmDelete&id=' . $materiacurso['id_materia_curso'] . '" class="btn btn-danger btn-sm">Eliminar</a>
                         </td>
                     </tr>
                 ';
             }
         } else {
-            $output_mt_curso= '<tr><td colspan="4">No se encontraron considencias.</td></tr>';
+            $output_mt_curso= '<tr><td colspan="4">No se encontraron coincidencias.</td></tr>';
         }
-        
+    
         echo $output_mt_curso;
     }
+
 
     // Función para exportar materiascursos a CSV
     public function exportToCSV()
